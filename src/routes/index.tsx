@@ -77,7 +77,7 @@ function Reveal({ children, className = "" }: { children: ReactNode; className?:
     if (!el) return;
     const io = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting) {
+        if (e?.isIntersecting) {
           el.classList.add("in");
           io.disconnect();
         }
@@ -432,7 +432,7 @@ function Index() {
             ["Contact", PHONE],
           ].map(([k, v]) => (
             <div key={k} className="border-gold/20 border-b border-r px-6 py-10 text-center last:col-span-2 md:border-b-0 md:last:col-span-1">
-              <p className="text-[10px] font-semibold tracking-[0.4em] text-muted-foreground">{k.toUpperCase()}</p>
+              <p className="text-[10px] font-semibold tracking-[0.4em] text-muted-foreground">{k?.toUpperCase()}</p>
               <p className="mt-3 font-serif text-xl font-semibold text-gold-bright">{v}</p>
             </div>
           ))}
