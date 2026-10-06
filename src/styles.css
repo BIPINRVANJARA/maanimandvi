@@ -149,6 +149,16 @@
 @utility animate-spin-slow { animation: spin-slow 120s linear infinite; }
 @utility animate-pulse-ring { animation: pulse-ring 2s ease-out infinite; }
 
+@keyframes sound-bar-1 { 0%, 100% { height: 4px; } 50% { height: 16px; } }
+@keyframes sound-bar-2 { 0%, 100% { height: 14px; } 50% { height: 5px; } }
+@keyframes sound-bar-3 { 0%, 100% { height: 7px; } 50% { height: 18px; } }
+@keyframes sound-bar-4 { 0%, 100% { height: 15px; } 50% { height: 4px; } }
+
+@utility animate-sound-bar-1 { animation: sound-bar-1 0.8s ease-in-out infinite; }
+@utility animate-sound-bar-2 { animation: sound-bar-2 0.7s ease-in-out infinite; }
+@utility animate-sound-bar-3 { animation: sound-bar-3 0.9s ease-in-out infinite; }
+@utility animate-sound-bar-4 { animation: sound-bar-4 0.65s ease-in-out infinite; }
+
 .reveal { opacity: 0; transform: translateY(40px); transition: opacity 1s ease, transform 1s cubic-bezier(.2,.7,.2,1); }
 .reveal.in { opacity: 1; transform: none; }
 .route-line { stroke-dasharray: 900; stroke-dashoffset: 900; }

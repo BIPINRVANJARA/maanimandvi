@@ -1,14 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import heroPoster from "@/assets/hero-poster.jpg.asset.json";
-import passesImg from "@/assets/passes.png.asset.json";
-import singers1 from "@/assets/singers-1.png.asset.json";
-import singers2 from "@/assets/singers-2.png.asset.json";
-import singers3 from "@/assets/singers-3.png.asset.json";
-import venueImg from "@/assets/venue.png.asset.json";
+import heroPoster from "@/assets/hero-poster.jpg";
+import passesImg from "@/assets/passes.png";
+import singers1 from "@/assets/singers-1.png";
+import singers2 from "@/assets/singers-2.png";
+import singers3 from "@/assets/singers-3.png";
+import venueImg from "@/assets/venue.png";
 import garbaCircle from "@/assets/garba-circle.jpg";
 import dancer from "@/assets/dancer.jpg";
 import diyas from "@/assets/diyas.jpg";
+import { BackgroundMusic } from "@/components/BackgroundMusic";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -49,18 +50,149 @@ const NAV = [
   ["Venue", "#venue"],
 ] as const;
 
-// Artist details are configurable — names to be confirmed by organisers.
-const LINEUP = [
-  { img: singers2.url, title: "Featured Voices", role: "Lead Singers", note: "Line-up details to be announced." },
-  { img: singers1.url, title: "The Raas Ensemble", role: "Garba Vocalists", note: "Line-up details to be announced." },
-  { img: singers3.url, title: "The Mandvo Voices", role: "Garba Vocalists", note: "Line-up details to be announced." },
-];
+export interface SingerDay {
+  dayNumber: number;
+  dayLabel: string;
+  date: string;
+  fullDate: string;
+  weekday: string;
+  name: string;
+  nativeName: string;
+  title: string;
+  role: string;
+  bio: string;
+  photo: string;
+  badge: string;
+}
 
-const NIGHTS = Array.from({ length: 9 }, (_, i) => ({
-  date: `${11 + i} OCT`,
-  day: `DAY 0${i + 1}`,
-  theme: "Theme to be announced",
-}));
+const SINGERS_SCHEDULE: SingerDay[] = [
+  {
+    dayNumber: 1,
+    dayLabel: "DAY 01",
+    date: "11 OCT",
+    fullDate: "Sunday, 11 October 2026",
+    weekday: "Sunday",
+    name: "Hina Suthar",
+    nativeName: "હીના સુથાર",
+    title: "Garba Queen of Every Beat",
+    role: "Opening Night Headliner",
+    bio: "Kicking off Maa No Mandvo 2026 with unmatchable energy! Hina Suthar commands the stage with electrifying traditional and fusion garba rhythms that set the festival ablaze.",
+    photo: "/photos/day1-hina-suthar.png",
+    badge: "OPENING NIGHT",
+  },
+  {
+    dayNumber: 2,
+    dayLabel: "DAY 02",
+    date: "12 OCT",
+    fullDate: "Monday, 12 October 2026",
+    weekday: "Monday",
+    name: "Dharti Solanki",
+    nativeName: "ધરતી સોલંકી",
+    title: "High-Energy Folk Sensation",
+    role: "Garba Vocalist",
+    bio: "Renowned across Gujarat for non-stop Tahukar beats and authentic folk melodies. Dharti Solanki brings vibrant passion and relentless rhythm to the mandvo circle.",
+    photo: "/photos/day2-dharti-solanki.png",
+    badge: "TAHUKAR SPECIAL",
+  },
+  {
+    dayNumber: 3,
+    dayLabel: "DAY 03",
+    date: "13 OCT",
+    fullDate: "Tuesday, 13 October 2026",
+    weekday: "Tuesday",
+    name: "Mansi Kumavat",
+    nativeName: "માનસી કુમાવત",
+    title: "Trending Garba Icon",
+    role: "Youth Sensation Vocalist",
+    bio: "The viral voice behind chart-topping Navratri tracks. Mansi Kumavat's youthful charm and dynamic vocal range keep the crowd whirling until the late hours.",
+    photo: "/photos/day3-mansi-kumavat.png",
+    badge: "YOUTH FAVOURITE",
+  },
+  {
+    dayNumber: 4,
+    dayLabel: "DAY 04",
+    date: "14 OCT",
+    fullDate: "Wednesday, 14 October 2026",
+    weekday: "Wednesday",
+    name: "Kinjal Dave",
+    nativeName: "કિંજલ દવે",
+    title: "The Garba Empress",
+    role: "Mega Star Performer",
+    bio: "One of Gujarat's most celebrated global musical icons. Kinjal Dave brings unmatched charisma, signature hits, and timeless garba anthems to Maa No Mandvo.",
+    photo: "/photos/day4-kinjal-dave.png",
+    badge: "STAR ATTRACTION",
+  },
+  {
+    dayNumber: 5,
+    dayLabel: "DAY 05",
+    date: "15 OCT",
+    fullDate: "Thursday, 15 October 2026",
+    weekday: "Thursday",
+    name: "Varsha Vanjara",
+    nativeName: "વર્ષા વણઝારા",
+    title: "Melodious Traditional Swar",
+    role: "Lead Folk Artist",
+    bio: "With deep-rooted reverence and powerful traditional cadence, Varsha Vanjara enchants the mandvo with authentic Maa Ambe stutis and timeless Raas.",
+    photo: "/photos/day5-varsha-vanjara.jpg",
+    badge: "FOLK MASTER",
+  },
+  {
+    dayNumber: 6,
+    dayLabel: "DAY 06",
+    date: "16 OCT",
+    fullDate: "Friday, 16 October 2026",
+    weekday: "Friday",
+    name: "Geeta Rabari",
+    nativeName: "ગીતા રબારી",
+    title: "Kutch Ni Koyal & Folk Legend",
+    role: "Cultural Icon",
+    bio: "The pride of Kutch and Gujarat, Geeta Rabari delivers an iconic performance steeped in cultural heritage, rich traditional vocals, and heartfelt devotion.",
+    photo: "/photos/day6-geeta-rabari.jpg",
+    badge: "WEEKEND SPECIAL",
+  },
+  {
+    dayNumber: 7,
+    dayLabel: "DAY 07",
+    date: "17 OCT",
+    fullDate: "Saturday, 17 October 2026",
+    weekday: "Saturday",
+    name: "Divya Thakor",
+    nativeName: "દિવ્યા ઠાકોર",
+    title: "Powerhouse Garba Vocalist",
+    role: "High-Octane Performer",
+    bio: "Known for an electrifying stage presence and resounding thumps that get every foot moving, Divya Thakor brings pure festive fire to Saturday night.",
+    photo: "/photos/day7-divya-thakor.jpg",
+    badge: "SATURDAY MEGA NIGHT",
+  },
+  {
+    dayNumber: 8,
+    dayLabel: "DAY 08",
+    date: "18 OCT",
+    fullDate: "Sunday, 18 October 2026",
+    weekday: "Sunday",
+    name: "Pooja Krishna",
+    nativeName: "પૂજા કૃષ્ણ",
+    title: "Divine & Vibrant Raas Star",
+    role: "Garba Vocalist",
+    bio: "Pooja Krishna combines soulful spiritual devotion with fast-paced raas rhythms, creating a celestial garba experience under the Himatnagar sky.",
+    photo: "/photos/day8-pooja-krishna.jpg",
+    badge: "ASHTAMI SPECIAL",
+  },
+  {
+    dayNumber: 9,
+    dayLabel: "DAY 09",
+    date: "19 OCT",
+    fullDate: "Monday, 19 October 2026",
+    weekday: "Monday",
+    name: "Grand Finale Maha Raas",
+    nativeName: "મહા રાસ ગ્રાન્ડ ફિનાલે",
+    title: "All-Stars Mandvo Ensemble",
+    role: "Sharad Purnima Mega Finale",
+    bio: "The grand crowning celebration of Maa No Mandvo 2026! A monumental finale uniting the finest artists, master orchestra, and thousands of dancers for an unforgettable final night.",
+    photo: "/photos/day9-grand-finale.png",
+    badge: "GRAND FINALE",
+  },
+];
 
 const FAQ = [
   ["Where is Maa No Mandvo?", "HIR Party Plot, New Civil – Gadhoda Road, Himatnagar, Gujarat."],
@@ -337,26 +469,32 @@ function PassCard() {
         className="gold-frame transition-transform duration-200 ease-out"
         style={{ transform: `rotateX(${t.x}deg) rotateY(${t.y}deg)` }}
       >
-        <img src={passesImg.url} alt="Official Maa No Mandvo pass poster with booking QR code" className="block w-full" loading="lazy" />
+        <img src={passesImg} alt="Official Maa No Mandvo pass poster with booking QR code" className="block w-full" loading="lazy" />
       </div>
     </div>
   );
 }
 
-/* ---------- Page ---------- */
 function Index() {
   const [intro, setIntro] = useState(true);
-  const [artist, setArtist] = useState<(typeof LINEUP)[number] | null>(null);
+  const [selectedDay, setSelectedDay] = useState<number | "all">("all");
+  const [activeArtist, setActiveArtist] = useState<SingerDay | null>(null);
+
+  const displayedArtists =
+    selectedDay === "all"
+      ? SINGERS_SCHEDULE
+      : SINGERS_SCHEDULE.filter((s) => s.dayNumber === selectedDay);
 
   return (
     <main className="overflow-x-hidden">
       {intro && <Intro onDone={() => setIntro(false)} />}
+      <BackgroundMusic />
       <Nav />
 
       {/* HERO */}
       <section id="home" className="relative flex min-h-screen items-end overflow-hidden bg-ink">
         <img
-          src={heroPoster.url}
+          src={heroPoster}
           alt="Maa Durga above the Maa No Mandvo mandala"
           className="absolute left-1/2 top-0 w-[max(100%,900px)] max-w-none -translate-x-1/2 -translate-y-[6%] opacity-90 [mask-image:linear-gradient(to_bottom,black_34%,transparent_47%)]"
         />
@@ -465,65 +603,259 @@ function Index() {
         </div>
       </section>
 
-      {/* SINGERS */}
-      <section id="singers" className="bg-mandala relative py-28">
+      {/* SINGERS ACCORDING TO PARTICULAR DAY */}
+      <section id="singers" className="bg-mandala relative py-28 border-t border-gold/30">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal className="text-center">
-            <Eyebrow>LIVE AT MAA NO MANDVO</Eyebrow>
-            <h2 className="mt-6 font-serif text-5xl font-semibold md:text-6xl">The Voices of the Mandvo</h2>
-            <p className="mt-4 text-cream/70">The artists bringing the rhythm to your raas.</p>
+            <Eyebrow>NAVRATRI 2026 · DAILY LINE-UP</Eyebrow>
+            <h2 className="mt-6 font-serif text-5xl font-semibold md:text-6xl">
+              The Voices of <span className="text-gold">the Mandvo</span>
+            </h2>
+            <p className="mt-4 max-w-2xl mx-auto text-cream/80 text-base md:text-lg">
+              Nine nights, nine celebrated artists. Discover the legendary voices performing live at HIR Party Plot, Himatnagar.
+            </p>
           </Reveal>
-          <div className="mt-16 grid gap-8 md:grid-cols-3">
-            {LINEUP.map((a, i) => (
-              <Reveal key={a.img} className={i === 0 ? "md:col-span-3 md:mx-auto md:w-2/3" : i === 2 ? "md:mt-16" : ""}>
-                <button onClick={() => setArtist(a)} className="group relative block w-full overflow-hidden text-left">
-                  <img src={a.img} alt={a.title} loading="lazy" className="block w-full transition duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 border border-transparent bg-ink/0 transition duration-500 group-hover:border-gold group-hover:bg-ink/50" />
-                  <div className="absolute inset-x-0 bottom-0 translate-y-4 p-6 opacity-0 transition duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                    <p className="font-serif text-3xl font-semibold text-gold-bright">{a.title}</p>
-                    <p className="mt-1 text-[10px] font-semibold tracking-[0.4em] text-cream">LIVE AT MAA NO MANDVO</p>
+
+          {/* Day Filter Tabs */}
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-2 md:gap-3">
+            <button
+              onClick={() => setSelectedDay("all")}
+              className={`rounded-full px-5 py-2 text-xs font-bold tracking-widest transition-all duration-300 ${
+                selectedDay === "all"
+                  ? "bg-gold text-ink shadow-[0_0_20px_rgba(212,175,55,0.4)] scale-105"
+                  : "border border-gold/40 bg-maroon/40 text-cream/80 hover:border-gold hover:text-gold-bright"
+              }`}
+            >
+              ALL 9 NIGHTS
+            </button>
+            {SINGERS_SCHEDULE.map((s) => (
+              <button
+                key={s.dayNumber}
+                onClick={() => setSelectedDay(s.dayNumber)}
+                className={`rounded-full px-4 py-2 text-xs font-bold tracking-wider transition-all duration-300 ${
+                  selectedDay === s.dayNumber
+                    ? "bg-gold text-ink shadow-[0_0_20px_rgba(212,175,55,0.4)] scale-105"
+                    : "border border-gold/30 bg-maroon/30 text-cream/70 hover:border-gold hover:text-gold-bright"
+                }`}
+              >
+                {s.dayLabel} · {s.date}
+              </button>
+            ))}
+          </div>
+
+          {/* Singer Cards Grid */}
+          <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {displayedArtists.map((artist) => (
+              <Reveal key={artist.dayNumber} className="h-full">
+                <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-gold/30 bg-maroon/60 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 hover:border-gold hover:shadow-[0_20px_45px_-10px_rgba(212,175,55,0.35)]">
+                  {/* Photo with Overlays */}
+                  <div className="relative aspect-[4/5] w-full overflow-hidden bg-ink">
+                    <img
+                      src={artist.photo}
+                      alt={artist.name}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-maroon via-maroon/20 to-black/40" />
+
+                    {/* Top Badges */}
+                    <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4">
+                      <span className="rounded-full border border-gold/40 bg-ink/80 px-3.5 py-1 text-[11px] font-bold tracking-widest text-gold-bright backdrop-blur-md shadow-lg">
+                        {artist.dayLabel} · {artist.date}
+                      </span>
+                      <span className="rounded-full bg-gold px-3 py-1 text-[10px] font-extrabold tracking-wider text-ink shadow-md">
+                        {artist.badge}
+                      </span>
+                    </div>
+
+                    {/* Bottom overlay info on image */}
+                    <div className="absolute inset-x-0 bottom-0 p-5">
+                      <p className="font-deva text-sm tracking-widest text-gold-bright/90" lang="gu">
+                        {artist.nativeName}
+                      </p>
+                      <h3 className="mt-1 font-serif text-3xl font-bold text-cream transition group-hover:text-gold-bright">
+                        {artist.name}
+                      </h3>
+                      <p className="mt-1 text-xs font-semibold tracking-wider text-gold">
+                        {artist.title}
+                      </p>
+                    </div>
                   </div>
-                </button>
+
+                  {/* Card Content & Details */}
+                  <div className="flex flex-1 flex-col justify-between p-6">
+                    <div>
+                      <div className="flex items-center justify-between border-b border-gold/20 pb-3 text-[11px] text-muted-foreground">
+                        <span className="font-bold tracking-wider text-cream/90">{artist.role}</span>
+                        <span className="text-gold/90">{artist.fullDate}</span>
+                      </div>
+                      <p className="mt-3 text-xs leading-relaxed text-cream/75 line-clamp-3">
+                        {artist.bio}
+                      </p>
+                    </div>
+
+                    {/* Card Actions */}
+                    <div className="mt-6 flex items-center gap-3 pt-4 border-t border-gold/15">
+                      <button
+                        onClick={() => setActiveArtist(artist)}
+                        className="flex-1 rounded border border-gold/60 bg-transparent py-2.5 text-center text-[11px] font-bold tracking-[0.2em] text-cream transition hover:border-gold-bright hover:bg-gold hover:text-ink"
+                      >
+                        ARTIST BIO
+                      </button>
+                      <a
+                        href={PASS_URL}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex-1 rounded bg-gold py-2.5 text-center text-[11px] font-bold tracking-[0.2em] text-ink transition hover:brightness-110 shadow-sm"
+                      >
+                        GET PASS →
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {artist && (
-        <div className="fixed inset-0 z-[80] flex items-center justify-center bg-ink/85 p-6 backdrop-blur" onClick={() => setArtist(null)}>
-          <div className="gold-frame grid max-w-3xl bg-maroon md:grid-cols-2" onClick={(e) => e.stopPropagation()}>
-            <img src={artist.img} alt={artist.title} className="h-full w-full object-cover" />
-            <div className="p-8">
-              <p className="text-[10px] font-semibold tracking-[0.4em] text-gold">{artist.role.toUpperCase()}</p>
-              <h3 className="mt-3 font-serif text-4xl font-semibold">{artist.title}</h3>
-              <p className="mt-4 text-cream/70">{artist.note}</p>
-              <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="mt-6 inline-block text-xs font-bold tracking-[0.3em] text-gold-bright">
-                FOLLOW FOR REVEALS →
-              </a>
-              <button onClick={() => setArtist(null)} className="mt-8 block text-xs tracking-[0.3em] text-muted-foreground hover:text-cream">
-                CLOSE ×
-              </button>
+      {/* ARTIST DETAIL MODAL */}
+      {activeArtist && (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-ink/85 p-4 md:p-6 backdrop-blur-md animate-fade-in"
+          onClick={() => setActiveArtist(null)}
+        >
+          <div
+            className="gold-frame relative grid max-h-[90vh] w-full max-w-4xl overflow-hidden rounded-2xl bg-maroon shadow-2xl md:grid-cols-2"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Image */}
+            <div className="relative h-64 md:h-auto overflow-hidden bg-ink">
+              <img
+                src={activeArtist.photo}
+                alt={activeArtist.name}
+                className="h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-maroon/90 via-transparent to-transparent md:hidden" />
+              <div className="absolute left-4 top-4 rounded-full border border-gold/40 bg-ink/80 px-3.5 py-1 text-xs font-bold tracking-widest text-gold-bright backdrop-blur-md">
+                {activeArtist.dayLabel} · {activeArtist.date}
+              </div>
+            </div>
+
+            {/* Modal Info */}
+            <div className="flex flex-col justify-between overflow-y-auto p-6 md:p-8">
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="rounded-full bg-gold/20 border border-gold/40 px-3 py-1 text-[10px] font-bold tracking-widest text-gold-bright">
+                    {activeArtist.badge}
+                  </span>
+                  <button
+                    onClick={() => setActiveArtist(null)}
+                    className="text-2xl leading-none text-muted-foreground hover:text-gold"
+                    aria-label="Close"
+                  >
+                    ×
+                  </button>
+                </div>
+
+                <p className="mt-4 font-deva text-lg tracking-wider text-gold" lang="gu">
+                  {activeArtist.nativeName}
+                </p>
+                <h3 className="font-serif text-3xl md:text-4xl font-bold text-cream">
+                  {activeArtist.name}
+                </h3>
+                <p className="mt-1 text-xs font-semibold tracking-wider text-gold-bright">
+                  {activeArtist.title}
+                </p>
+
+                <div className="mt-4 rounded-lg border border-gold/20 bg-ink/40 p-3 text-xs">
+                  <p className="text-muted-foreground">
+                    Performance Date: <strong className="text-cream">{activeArtist.fullDate} ({activeArtist.weekday})</strong>
+                  </p>
+                  <p className="mt-1 text-muted-foreground">
+                    Role: <strong className="text-gold">{activeArtist.role}</strong>
+                  </p>
+                  <p className="mt-1 text-muted-foreground">
+                    Venue: <strong className="text-cream">HIR Party Plot, Himatnagar</strong>
+                  </p>
+                </div>
+
+                <p className="mt-5 text-sm leading-relaxed text-cream/80">
+                  {activeArtist.bio}
+                </p>
+              </div>
+
+              <div className="mt-8 flex flex-col gap-3 pt-4 border-t border-gold/20">
+                <a
+                  href={PASS_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="block rounded bg-gold py-3 text-center text-xs font-bold tracking-[0.3em] text-ink transition hover:brightness-110 shadow-lg"
+                >
+                  BUY PASS FOR THIS NIGHT →
+                </a>
+                <a
+                  href={INSTAGRAM_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="block text-center text-xs font-semibold tracking-[0.25em] text-gold hover:underline"
+                >
+                  FOLLOW @MAANOMANDVO ON INSTAGRAM →
+                </a>
+              </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* NINE NIGHTS */}
-      <section className="bg-textile py-28">
+      {/* NINE NIGHTS CALENDAR SCHEDULE */}
+      <section className="bg-textile py-28 border-t border-gold/30">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal className="text-center">
-            <Eyebrow>NAVRATRI 2026</Eyebrow>
-            <h2 className="mt-6 font-serif text-5xl font-semibold">Nine Nights</h2>
+            <Eyebrow>OCTOBER 11 — 19, 2026</Eyebrow>
+            <h2 className="mt-6 font-serif text-5xl font-semibold">Nine Nights of Raas</h2>
+            <p className="mt-3 text-cream/70 text-sm">Tap on any night to discover the featured artist and reserve your passes.</p>
           </Reveal>
-          <div className="mt-14 flex snap-x gap-4 overflow-x-auto pb-6">
-            {NIGHTS.map((n, i) => (
-              <div key={n.day} className="group min-w-[200px] snap-start border border-gold/30 bg-maroon/60 p-6 transition hover:border-gold hover:bg-crimson">
-                <p className="text-gold font-serif text-6xl font-semibold">{String(i + 1).padStart(2, "0")}</p>
-                <p className="mt-4 text-sm font-bold tracking-[0.3em] text-cream">{n.date}</p>
-                <p className="mt-1 text-[10px] tracking-[0.3em] text-muted-foreground">{n.day}</p>
-                <p className="mt-6 font-serif italic text-cream/60">{n.theme}</p>
-              </div>
+          <div className="mt-14 flex snap-x gap-4 overflow-x-auto pb-6 scrollbar-thin">
+            {SINGERS_SCHEDULE.map((n) => (
+              <button
+                key={n.dayLabel}
+                onClick={() => setActiveArtist(n)}
+                className="group min-w-[240px] snap-start rounded-xl border border-gold/30 bg-maroon/60 p-6 text-left transition hover:border-gold hover:bg-crimson/80 hover:shadow-[0_10px_30px_rgba(212,175,55,0.25)] flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <p className="text-gold font-serif text-4xl font-semibold">{String(n.dayNumber).padStart(2, "0")}</p>
+                    <span className="text-[10px] font-bold tracking-wider text-gold-bright/90 bg-ink/50 px-2.5 py-1 rounded-full border border-gold/30">
+                      {n.weekday}
+                    </span>
+                  </div>
+                  <p className="mt-3 text-sm font-bold tracking-[0.3em] text-cream">{n.date}</p>
+                  <p className="mt-0.5 text-[10px] tracking-[0.3em] text-muted-foreground">{n.dayLabel}</p>
+
+                  {/* Singer Avatar */}
+                  <div className="my-4 flex items-center gap-3">
+                    <img
+                      src={n.photo}
+                      alt={n.name}
+                      className="h-14 w-14 rounded-full border-2 border-gold/70 object-cover shadow-md transition group-hover:scale-105 group-hover:border-gold-bright"
+                    />
+                    <div>
+                      <p className="font-serif text-base font-bold text-cream group-hover:text-gold-bright transition leading-snug">
+                        {n.name}
+                      </p>
+                      <p className="text-[10px] font-medium text-gold/90 mt-0.5 line-clamp-1">
+                        {n.title}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="mt-2 text-[10px] font-bold tracking-widest text-gold group-hover:underline flex items-center justify-between">
+                  <span>VIEW ARTIST</span>
+                  <span>→</span>
+                </p>
+              </button>
             ))}
           </div>
         </div>
@@ -559,10 +891,10 @@ function Index() {
             {[
               [dancer, "THE NIGHT WE DANCED"],
               [garbaCircle, "GARBA NIGHT"],
-              [heroPoster.url, "MAA NO MANDVO"],
+              [heroPoster, "MAA NO MANDVO"],
               [diyas, "THE AARTI"],
-              [venueImg.url, "THE NEW ADDRESS"],
-              [singers2.url, "THE VOICES"],
+              [venueImg, "THE NEW ADDRESS"],
+              [singers2, "THE VOICES"],
             ].map(([src, cap]) => (
               <figure key={cap} className="group relative break-inside-avoid overflow-hidden">
                 <img src={src} alt={cap} loading="lazy" className="w-full transition duration-700 group-hover:scale-105" />
@@ -657,6 +989,22 @@ function Index() {
           <p className="mt-12 text-xs text-muted-foreground">
             HIR Party Plot, New Civil – Gadhoda Road, Himatnagar · {PHONE}
           </p>
+          <div className="mt-10 border-t border-gold/20 pt-6 text-xs text-cream/80 flex flex-col items-center gap-2">
+            <p className="tracking-widest uppercase font-medium">
+              all rights reserved by kyvraone 2026
+            </p>
+            <p className="text-[12px] text-muted-foreground">
+              made by{" "}
+              <a
+                href="https://www.instagram.com/kyvraone/"
+                target="_blank"
+                rel="noreferrer"
+                className="text-gold hover:underline transition font-semibold"
+              >
+                ig @kyvraone
+              </a>
+            </p>
+          </div>
         </div>
       </footer>
     </main>

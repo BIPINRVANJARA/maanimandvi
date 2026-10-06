@@ -1,24 +1,29 @@
-# Maanomandvo
+# Maa No Mandvo 2026 — The OG Garba
 
-Implement exactly the screenshot and nothing else
+Official website for Maa No Mandvo 2026, hosted at [maanomandvo.web.app](https://maanomandvo.web.app).
 
-This project was built with [Lovable](https://lovable.dev).
+- **Dates**: 11 — 19 October 2026
+- **Venue**: HIR Party Plot, New Civil – Gadhoda Road, Himatnagar, Gujarat
+- **Instagram**: [@maanomandvo](https://www.instagram.com/maanomandvo/)
 
-## Build with Lovable
+---
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/fa691c96-0f09-4f5b-8eca-e5ac959a6458).
+### Credits & Rights
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+- **All rights reserved by Kyvraone 2026**
+- **Made by**: [ig @kyvraone](https://www.instagram.com/kyvraone/)
 
-## Development
+---
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+### Development
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+# Install dependencies
+npm install
+
+# Start local development server
 npm run dev
+
+# Build for production
+npm run build
 ```
