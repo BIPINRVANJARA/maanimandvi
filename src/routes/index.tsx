@@ -358,7 +358,7 @@ function Index() {
         <img
           src={heroPoster.url}
           alt="Maa Durga above the Maa No Mandvo mandala"
-          className="absolute inset-0 h-full w-full object-cover object-top opacity-80 [mask-image:linear-gradient(to_bottom,black_55%,transparent)]"
+          className="absolute left-1/2 top-0 w-[max(100%,900px)] max-w-none -translate-x-1/2 -translate-y-[6%] opacity-90 [mask-image:linear-gradient(to_bottom,black_34%,transparent_47%)]"
         />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,transparent_30%,var(--ink)_85%)]" />
         <Embers />
