@@ -9,6 +9,15 @@ import venueImg from "@/assets/venue.png";
 import garbaCircle from "@/assets/garba-circle.jpg";
 import dancer from "@/assets/dancer.jpg";
 import diyas from "@/assets/diyas.jpg";
+import hinaSutharImg from "@/assets/artists/hina-suthar.png";
+import dhartiSolankiImg from "@/assets/artists/dharti-solanki.png";
+import mansiKumavatImg from "@/assets/artists/mansi-kumavat.png";
+import jaiminiLimbachiyaImg from "@/assets/artists/jaimini-limbachiya.png";
+import varshaVanzaraImg from "@/assets/artists/varsha-vanzara.jpg";
+import kajalMaheriyaImg from "@/assets/artists/kajal-maheriya.jpg";
+import divyaThakorImg from "@/assets/artists/divya-thakor.jpg";
+import poojaKrishnaImg from "@/assets/artists/pooja-krishna.jpg";
+import grandFinaleImg from "@/assets/artists/grand-finale.png";
 import { BackgroundMusic } from "@/components/BackgroundMusic";
 
 export const Route = createFileRoute("/")({
@@ -82,7 +91,7 @@ const SINGERS_SCHEDULE: SingerDay[] = [
     title: "Garba Queen of Every Beat",
     role: "Opening Night Headliner",
     bio: "Kicking off Maa No Mandvo 2026 with unmatchable energy! Hina Suthar commands the stage with electrifying traditional and fusion garba rhythms that set the festival ablaze.",
-    photo: "/photos/day1-hina-suthar.png",
+    photo: hinaSutharImg,
     badge: "OPENING NIGHT",
     mepassUrl: "https://mepass.in/artist/hina-suthar",
   },
@@ -98,7 +107,7 @@ const SINGERS_SCHEDULE: SingerDay[] = [
     title: "Heart-Winning Folk Sensation",
     role: "Garba Vocalist",
     bio: "Dharti Solanki is a heart-winning folk singer whose voice carries the sweet essence of Gujarat’s rich culture and traditions, bringing vibrant passion and relentless rhythm to the mandvo circle.",
-    photo: "/photos/day2-dharti-solanki.png",
+    photo: dhartiSolankiImg,
     badge: "TAHUKAR SPECIAL",
     mepassUrl: "https://mepass.in/artist/dharti-solanki",
     instagramUrl: "https://www.instagram.com/the_dharti_solanki02/",
@@ -115,7 +124,7 @@ const SINGERS_SCHEDULE: SingerDay[] = [
     title: "Trending Garba & Youth Icon",
     role: "Youth Sensation Vocalist",
     bio: "Mansi Kumavat (Mansi Kumawat) is a highly popular Gujarati folk and Garba singer from Ahmedabad. Recognized for her powerful vocals, vibrant energy, and enthralling stage presence during Navratri.",
-    photo: "/photos/day3-mansi-kumavat.png",
+    photo: mansiKumavatImg,
     badge: "YOUTH FAVOURITE",
     mepassUrl: "https://mepass.in/artist/mansi-kumavat",
     instagramUrl: "https://www.instagram.com/mansi_kumawat_official/",
@@ -132,7 +141,7 @@ const SINGERS_SCHEDULE: SingerDay[] = [
     title: "Energetic Folk & Devotional Voice",
     role: "Garba & Devotional Vocalist",
     bio: "Jaimini Limbachiya is a popular Gujarati folk and devotional singer known for an energetic stage presence, non-stop garba tracks, and regional hit singles that keep the mandvo dancing all night.",
-    photo: "/photos/day4-jaimini-limbachiya.png",
+    photo: jaiminiLimbachiyaImg,
     badge: "MID-WEEK SPECIAL",
     mepassUrl: "https://mepass.in/artist/jaimini-limbachiya-1",
     instagramUrl: "https://www.instagram.com/_jaiminilimbachiya_/",
@@ -149,7 +158,7 @@ const SINGERS_SCHEDULE: SingerDay[] = [
     title: "Melodious Traditional Swar",
     role: "Lead Folk Artist",
     bio: "With deep-rooted reverence and powerful traditional cadence, Varsha Vanzara enchants the mandvo with authentic Maa Ambe stutis, timeless Raas, and heart-stirring devotional music.",
-    photo: "/photos/day5-varsha-vanzara.jpg",
+    photo: varshaVanzaraImg,
     badge: "FOLK MASTER",
     mepassUrl: "https://mepass.in/artist/varsha-vanzara",
   },
@@ -165,7 +174,7 @@ const SINGERS_SCHEDULE: SingerDay[] = [
     title: "Superstar Gujarati Garba Sensation",
     role: "Mega Star Performer",
     bio: "Superstar Gujarati folk and garba sensation Kajal Maheriya brings her chart-topping hits and electrifying stage presence to Maa No Mandvo, creating an unmissable weekend celebration.",
-    photo: "/photos/day6-kajal-maheriya.jpg",
+    photo: kajalMaheriyaImg,
     badge: "WEEKEND SPECIAL",
     mepassUrl: "https://mepass.in/artist/kajal-maheriya",
     spotifyUrl: "https://open.spotify.com/artist/2tjK30Wn1L7AmVdgnWLUtB",
@@ -182,7 +191,7 @@ const SINGERS_SCHEDULE: SingerDay[] = [
     title: "Powerhouse Garba Vocalist",
     role: "High-Octane Performer",
     bio: "Known for an electrifying stage presence and resounding thumps that get every foot moving, Divya Thakor brings pure festive fire to Saturday night with power-packed vocals.",
-    photo: "/photos/day7-divya-thakor.jpg",
+    photo: divyaThakorImg,
     badge: "SATURDAY MEGA NIGHT",
     mepassUrl: "https://mepass.in/artist/divya-thakor",
   },
@@ -198,7 +207,7 @@ const SINGERS_SCHEDULE: SingerDay[] = [
     title: "Divine & Vibrant Raas Star",
     role: "Garba Vocalist",
     bio: "Pooja Krishna combines soulful spiritual devotion with fast-paced raas rhythms, creating a celestial garba experience under the Himatnagar sky for the sacred Ashtami night.",
-    photo: "/photos/day8-pooja-krishna.jpg",
+    photo: poojaKrishnaImg,
     badge: "ASHTAMI SPECIAL",
     mepassUrl: "https://mepass.in/artist/pooja-krishna",
   },
@@ -214,7 +223,7 @@ const SINGERS_SCHEDULE: SingerDay[] = [
     title: "All-Stars Mandvo Ensemble",
     role: "Sharad Purnima Mega Finale",
     bio: "The grand crowning celebration of Maa No Mandvo 2026! A monumental finale uniting the finest artists, master orchestra, and thousands of dancers for an unforgettable final night.",
-    photo: "/photos/day9-grand-finale.png",
+    photo: grandFinaleImg,
     badge: "GRAND FINALE",
     mepassUrl: PASS_URL,
   },
