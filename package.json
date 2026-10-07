@@ -9,7 +9,7 @@
     "postbuild": "node -e \"require('fs').copyFileSync('dist/client/_shell.html', 'dist/client/index.html')\"",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
-    "deploy": "firebase deploy --only hosting",
+    "deploy": "npx -y firebase-tools deploy --only hosting",
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "vitest run",

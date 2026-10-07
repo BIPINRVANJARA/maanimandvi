@@ -44,7 +44,7 @@ const END = new Date("2026-10-20T02:00:00+05:30").getTime();
 const NAV = [
   ["Home", "#home"],
   ["The Mandvo", "#mandvo"],
-  ["Singers", "#singers"],
+  ["Showstoppers", "#singers"],
   ["Experience", "#experience"],
   ["Gallery", "#gallery"],
   ["Venue", "#venue"],
@@ -58,11 +58,15 @@ export interface SingerDay {
   weekday: string;
   name: string;
   nativeName: string;
+  category: "Artist" | "Singer" | "Ensemble";
   title: string;
   role: string;
   bio: string;
   photo: string;
   badge: string;
+  mepassUrl: string;
+  instagramUrl?: string;
+  spotifyUrl?: string;
 }
 
 const SINGERS_SCHEDULE: SingerDay[] = [
@@ -74,11 +78,13 @@ const SINGERS_SCHEDULE: SingerDay[] = [
     weekday: "Sunday",
     name: "Hina Suthar",
     nativeName: "હીના સુથાર",
+    category: "Artist",
     title: "Garba Queen of Every Beat",
     role: "Opening Night Headliner",
     bio: "Kicking off Maa No Mandvo 2026 with unmatchable energy! Hina Suthar commands the stage with electrifying traditional and fusion garba rhythms that set the festival ablaze.",
     photo: "/photos/day1-hina-suthar.png",
     badge: "OPENING NIGHT",
+    mepassUrl: "https://mepass.in/artist/hina-suthar",
   },
   {
     dayNumber: 2,
@@ -88,11 +94,14 @@ const SINGERS_SCHEDULE: SingerDay[] = [
     weekday: "Monday",
     name: "Dharti Solanki",
     nativeName: "ધરતી સોલંકી",
-    title: "High-Energy Folk Sensation",
+    category: "Singer",
+    title: "Heart-Winning Folk Sensation",
     role: "Garba Vocalist",
-    bio: "Renowned across Gujarat for non-stop Tahukar beats and authentic folk melodies. Dharti Solanki brings vibrant passion and relentless rhythm to the mandvo circle.",
+    bio: "Dharti Solanki is a heart-winning folk singer whose voice carries the sweet essence of Gujarat’s rich culture and traditions, bringing vibrant passion and relentless rhythm to the mandvo circle.",
     photo: "/photos/day2-dharti-solanki.png",
     badge: "TAHUKAR SPECIAL",
+    mepassUrl: "https://mepass.in/artist/dharti-solanki",
+    instagramUrl: "https://www.instagram.com/the_dharti_solanki02/",
   },
   {
     dayNumber: 3,
@@ -102,11 +111,14 @@ const SINGERS_SCHEDULE: SingerDay[] = [
     weekday: "Tuesday",
     name: "Mansi Kumavat",
     nativeName: "માનસી કુમાવત",
-    title: "Trending Garba Icon",
+    category: "Singer",
+    title: "Trending Garba & Youth Icon",
     role: "Youth Sensation Vocalist",
-    bio: "The viral voice behind chart-topping Navratri tracks. Mansi Kumavat's youthful charm and dynamic vocal range keep the crowd whirling until the late hours.",
+    bio: "Mansi Kumavat (Mansi Kumawat) is a highly popular Gujarati folk and Garba singer from Ahmedabad. Recognized for her powerful vocals, vibrant energy, and enthralling stage presence during Navratri.",
     photo: "/photos/day3-mansi-kumavat.png",
     badge: "YOUTH FAVOURITE",
+    mepassUrl: "https://mepass.in/artist/mansi-kumavat",
+    instagramUrl: "https://www.instagram.com/mansi_kumawat_official/",
   },
   {
     dayNumber: 4,
@@ -114,13 +126,16 @@ const SINGERS_SCHEDULE: SingerDay[] = [
     date: "14 OCT",
     fullDate: "Wednesday, 14 October 2026",
     weekday: "Wednesday",
-    name: "Kinjal Dave",
-    nativeName: "કિંજલ દવે",
-    title: "The Garba Empress",
-    role: "Mega Star Performer",
-    bio: "One of Gujarat's most celebrated global musical icons. Kinjal Dave brings unmatched charisma, signature hits, and timeless garba anthems to Maa No Mandvo.",
-    photo: "/photos/day4-kinjal-dave.png",
-    badge: "STAR ATTRACTION",
+    name: "Jaimini Limbachiya",
+    nativeName: "જૈમિની લીમ્બાચીયા",
+    category: "Singer",
+    title: "Energetic Folk & Devotional Voice",
+    role: "Garba & Devotional Vocalist",
+    bio: "Jaimini Limbachiya is a popular Gujarati folk and devotional singer known for an energetic stage presence, non-stop garba tracks, and regional hit singles that keep the mandvo dancing all night.",
+    photo: "/photos/day4-jaimini-limbachiya.png",
+    badge: "MID-WEEK SPECIAL",
+    mepassUrl: "https://mepass.in/artist/jaimini-limbachiya-1",
+    instagramUrl: "https://www.instagram.com/_jaiminilimbachiya_/",
   },
   {
     dayNumber: 5,
@@ -128,13 +143,15 @@ const SINGERS_SCHEDULE: SingerDay[] = [
     date: "15 OCT",
     fullDate: "Thursday, 15 October 2026",
     weekday: "Thursday",
-    name: "Varsha Vanjara",
+    name: "Varsha Vanzara",
     nativeName: "વર્ષા વણઝારા",
+    category: "Artist",
     title: "Melodious Traditional Swar",
     role: "Lead Folk Artist",
-    bio: "With deep-rooted reverence and powerful traditional cadence, Varsha Vanjara enchants the mandvo with authentic Maa Ambe stutis and timeless Raas.",
-    photo: "/photos/day5-varsha-vanjara.jpg",
+    bio: "With deep-rooted reverence and powerful traditional cadence, Varsha Vanzara enchants the mandvo with authentic Maa Ambe stutis, timeless Raas, and heart-stirring devotional music.",
+    photo: "/photos/day5-varsha-vanzara.jpg",
     badge: "FOLK MASTER",
+    mepassUrl: "https://mepass.in/artist/varsha-vanzara",
   },
   {
     dayNumber: 6,
@@ -142,13 +159,16 @@ const SINGERS_SCHEDULE: SingerDay[] = [
     date: "16 OCT",
     fullDate: "Friday, 16 October 2026",
     weekday: "Friday",
-    name: "Geeta Rabari",
-    nativeName: "ગીતા રબારી",
-    title: "Kutch Ni Koyal & Folk Legend",
-    role: "Cultural Icon",
-    bio: "The pride of Kutch and Gujarat, Geeta Rabari delivers an iconic performance steeped in cultural heritage, rich traditional vocals, and heartfelt devotion.",
-    photo: "/photos/day6-geeta-rabari.jpg",
+    name: "Kajal Maheriya",
+    nativeName: "કાજલ મહેરિયા",
+    category: "Singer",
+    title: "Superstar Gujarati Garba Sensation",
+    role: "Mega Star Performer",
+    bio: "Superstar Gujarati folk and garba sensation Kajal Maheriya brings her chart-topping hits and electrifying stage presence to Maa No Mandvo, creating an unmissable weekend celebration.",
+    photo: "/photos/day6-kajal-maheriya.jpg",
     badge: "WEEKEND SPECIAL",
+    mepassUrl: "https://mepass.in/artist/kajal-maheriya",
+    spotifyUrl: "https://open.spotify.com/artist/2tjK30Wn1L7AmVdgnWLUtB",
   },
   {
     dayNumber: 7,
@@ -158,11 +178,13 @@ const SINGERS_SCHEDULE: SingerDay[] = [
     weekday: "Saturday",
     name: "Divya Thakor",
     nativeName: "દિવ્યા ઠાકોર",
+    category: "Artist",
     title: "Powerhouse Garba Vocalist",
     role: "High-Octane Performer",
-    bio: "Known for an electrifying stage presence and resounding thumps that get every foot moving, Divya Thakor brings pure festive fire to Saturday night.",
+    bio: "Known for an electrifying stage presence and resounding thumps that get every foot moving, Divya Thakor brings pure festive fire to Saturday night with power-packed vocals.",
     photo: "/photos/day7-divya-thakor.jpg",
     badge: "SATURDAY MEGA NIGHT",
+    mepassUrl: "https://mepass.in/artist/divya-thakor",
   },
   {
     dayNumber: 8,
@@ -172,11 +194,13 @@ const SINGERS_SCHEDULE: SingerDay[] = [
     weekday: "Sunday",
     name: "Pooja Krishna",
     nativeName: "પૂજા કૃષ્ણ",
+    category: "Artist",
     title: "Divine & Vibrant Raas Star",
     role: "Garba Vocalist",
-    bio: "Pooja Krishna combines soulful spiritual devotion with fast-paced raas rhythms, creating a celestial garba experience under the Himatnagar sky.",
+    bio: "Pooja Krishna combines soulful spiritual devotion with fast-paced raas rhythms, creating a celestial garba experience under the Himatnagar sky for the sacred Ashtami night.",
     photo: "/photos/day8-pooja-krishna.jpg",
     badge: "ASHTAMI SPECIAL",
+    mepassUrl: "https://mepass.in/artist/pooja-krishna",
   },
   {
     dayNumber: 9,
@@ -186,11 +210,13 @@ const SINGERS_SCHEDULE: SingerDay[] = [
     weekday: "Monday",
     name: "Grand Finale Maha Raas",
     nativeName: "મહા રાસ ગ્રાન્ડ ફિનાલે",
+    category: "Ensemble",
     title: "All-Stars Mandvo Ensemble",
     role: "Sharad Purnima Mega Finale",
     bio: "The grand crowning celebration of Maa No Mandvo 2026! A monumental finale uniting the finest artists, master orchestra, and thousands of dancers for an unforgettable final night.",
     photo: "/photos/day9-grand-finale.png",
     badge: "GRAND FINALE",
+    mepassUrl: PASS_URL,
   },
 ];
 
@@ -603,16 +629,16 @@ function Index() {
         </div>
       </section>
 
-      {/* SINGERS ACCORDING TO PARTICULAR DAY */}
+      {/* SHOWSTOPPER'S SECTION */}
       <section id="singers" className="bg-mandala relative py-28 border-t border-gold/30">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal className="text-center">
             <Eyebrow>NAVRATRI 2026 · DAILY LINE-UP</Eyebrow>
             <h2 className="mt-6 font-serif text-5xl font-semibold md:text-6xl">
-              The Voices of <span className="text-gold">the Mandvo</span>
+              Showstopper's
             </h2>
             <p className="mt-4 max-w-2xl mx-auto text-cream/80 text-base md:text-lg">
-              Nine nights, nine celebrated artists. Discover the legendary voices performing live at HIR Party Plot, Himatnagar.
+              Nine nights, nine celebrated artists. Discover the authentic voices and legendary performers live at HIR Party Plot, Himatnagar.
             </p>
           </Reveal>
 
@@ -670,10 +696,15 @@ function Index() {
 
                     {/* Bottom overlay info on image */}
                     <div className="absolute inset-x-0 bottom-0 p-5">
-                      <p className="font-deva text-sm tracking-widest text-gold-bright/90" lang="gu">
-                        {artist.nativeName}
-                      </p>
-                      <h3 className="mt-1 font-serif text-3xl font-bold text-cream transition group-hover:text-gold-bright">
+                      <div className="flex items-center gap-2">
+                        <span className="rounded-full bg-gold/20 border border-gold/40 px-2.5 py-0.5 text-[11px] font-semibold text-gold-bright backdrop-blur-sm">
+                          {artist.category}
+                        </span>
+                        <p className="font-deva text-xs tracking-widest text-gold-bright/90" lang="gu">
+                          {artist.nativeName}
+                        </p>
+                      </div>
+                      <h3 className="mt-1.5 font-serif text-3xl font-bold text-cream transition group-hover:text-gold-bright">
                         {artist.name}
                       </h3>
                       <p className="mt-1 text-xs font-semibold tracking-wider text-gold">
@@ -698,15 +729,16 @@ function Index() {
                     <div className="mt-6 flex items-center gap-3 pt-4 border-t border-gold/15">
                       <button
                         onClick={() => setActiveArtist(artist)}
-                        className="flex-1 rounded border border-gold/60 bg-transparent py-2.5 text-center text-[11px] font-bold tracking-[0.2em] text-cream transition hover:border-gold-bright hover:bg-gold hover:text-ink"
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 rounded border border-gold/60 bg-transparent py-2.5 text-center text-[11px] font-bold tracking-[0.15em] text-cream transition hover:border-gold-bright hover:bg-gold hover:text-ink cursor-pointer"
                       >
-                        ARTIST BIO
+                        <span>About artist</span>
+                        <span className="text-xs">↗</span>
                       </button>
                       <a
                         href={PASS_URL}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex-1 rounded bg-gold py-2.5 text-center text-[11px] font-bold tracking-[0.2em] text-ink transition hover:brightness-110 shadow-sm"
+                        className="flex-1 rounded bg-gold py-2.5 text-center text-[11px] font-bold tracking-[0.15em] text-ink transition hover:brightness-110 shadow-sm"
                       >
                         GET PASS →
                       </a>
@@ -746,12 +778,17 @@ function Index() {
             <div className="flex flex-col justify-between overflow-y-auto p-6 md:p-8">
               <div>
                 <div className="flex items-center justify-between">
-                  <span className="rounded-full bg-gold/20 border border-gold/40 px-3 py-1 text-[10px] font-bold tracking-widest text-gold-bright">
-                    {activeArtist.badge}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="rounded-full bg-gold/20 border border-gold/40 px-3 py-1 text-[10px] font-bold tracking-widest text-gold-bright">
+                      {activeArtist.badge}
+                    </span>
+                    <span className="rounded-full bg-cream/10 border border-cream/30 px-2.5 py-1 text-[10px] font-bold tracking-wider text-cream">
+                      {activeArtist.category}
+                    </span>
+                  </div>
                   <button
                     onClick={() => setActiveArtist(null)}
-                    className="text-2xl leading-none text-muted-foreground hover:text-gold"
+                    className="text-2xl leading-none text-muted-foreground hover:text-gold cursor-pointer"
                     aria-label="Close"
                   >
                     ×
@@ -776,6 +813,9 @@ function Index() {
                     Role: <strong className="text-gold">{activeArtist.role}</strong>
                   </p>
                   <p className="mt-1 text-muted-foreground">
+                    Type: <strong className="text-cream">{activeArtist.category}</strong>
+                  </p>
+                  <p className="mt-1 text-muted-foreground">
                     Venue: <strong className="text-cream">HIR Party Plot, Himatnagar</strong>
                   </p>
                 </div>
@@ -785,7 +825,7 @@ function Index() {
                 </p>
               </div>
 
-              <div className="mt-8 flex flex-col gap-3 pt-4 border-t border-gold/20">
+              <div className="mt-8 flex flex-col gap-2.5 pt-4 border-t border-gold/20">
                 <a
                   href={PASS_URL}
                   target="_blank"
@@ -794,14 +834,36 @@ function Index() {
                 >
                   BUY PASS FOR THIS NIGHT →
                 </a>
-                <a
-                  href={INSTAGRAM_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block text-center text-xs font-semibold tracking-[0.25em] text-gold hover:underline"
-                >
-                  FOLLOW @MAANOMANDVO ON INSTAGRAM →
-                </a>
+                {activeArtist.mepassUrl && (
+                  <a
+                    href={activeArtist.mepassUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block rounded border border-gold/50 bg-ink/40 py-2.5 text-center text-xs font-bold tracking-[0.2em] text-gold-bright transition hover:bg-gold/20 hover:border-gold"
+                  >
+                    VIEW ON MEPASS ↗
+                  </a>
+                )}
+                {activeArtist.instagramUrl && (
+                  <a
+                    href={activeArtist.instagramUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block text-center text-xs font-semibold tracking-[0.2em] text-gold hover:underline"
+                  >
+                    FOLLOW ON INSTAGRAM ↗
+                  </a>
+                )}
+                {activeArtist.spotifyUrl && (
+                  <a
+                    href={activeArtist.spotifyUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block text-center text-xs font-semibold tracking-[0.2em] text-[#1DB954] hover:underline"
+                  >
+                    LISTEN ON SPOTIFY ↗
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -841,10 +903,13 @@ function Index() {
                       className="h-14 w-14 rounded-full border-2 border-gold/70 object-cover shadow-md transition group-hover:scale-105 group-hover:border-gold-bright"
                     />
                     <div>
+                      <span className="text-[9px] font-bold tracking-wider text-gold-bright uppercase">
+                        {n.category}
+                      </span>
                       <p className="font-serif text-base font-bold text-cream group-hover:text-gold-bright transition leading-snug">
                         {n.name}
                       </p>
-                      <p className="text-[10px] font-medium text-gold/90 mt-0.5 line-clamp-1">
+                      <p className="text-[10px] font-medium text-cream/70 mt-0.5 line-clamp-1">
                         {n.title}
                       </p>
                     </div>
