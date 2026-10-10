@@ -661,6 +661,12 @@ function TicketSelector({
 /* ═══════════════════════════════════════════════
    ATTENDEE FORM (STEP 2)
    ═══════════════════════════════════════════════ */
+interface FormErrors {
+  name?: string;
+  phone?: string;
+  terms?: string;
+}
+
 function AttendeeForm({
   booking,
   setBooking,
@@ -672,10 +678,10 @@ function AttendeeForm({
   onContinue: () => void;
   onBack: () => void;
 }) {
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<FormErrors>({});
 
   const validate = () => {
-    const errs: Record<string, string> = {};
+    const errs: FormErrors = {};
     const trimmedName = booking.name.trim();
     if (!trimmedName) errs.name = "Full name is required.";
     if (!booking.phone.trim()) errs.phone = "Phone number is required.";
