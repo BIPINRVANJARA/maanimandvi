@@ -8,7 +8,7 @@ import {
   Scripts,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import "../lib/firebase";
@@ -75,10 +75,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Maa No Mandvo 2026 — The OG Garba, Himatnagar" },
-      { name: "description", content: "Nine nights of Garba & Raas at HIR Party Plot, Himatnagar. 11–19 Oct 2026." },
+      { title: "Maa Ni Mandvi 2026 — માંની માંડવી નવરાત્રિ | Khedbrahma" },
+      {
+        name: "description",
+        content:
+          "Nine nights of captivating Garba at Khedbrahma, Gujarat. માંની માંડવી નવરાત્રિ 2026 — ગરબાની રાત, હવે નવા સરનામે...! Ancient Rhythms, Modern Heart.",
+      },
+      { property: "og:title", content: "Maa Ni Mandvi 2026 — માંની માંડવી નવરાત્રિ" },
+      {
+        property: "og:description",
+        content: "ગરબાની રાત, હવે નવા સરનામે...! Khedbrahma, Gujarat. 9 Nights. Passes now live.",
+      },
+      { property: "og:image", content: "/flyer.jpg" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "/flyer.jpg" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -91,7 +102,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/logo.jpg", type: "image/jpeg" },
     ],
   }),
   shellComponent: RootShell,

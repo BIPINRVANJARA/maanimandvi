@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "maanomandvo",
+    "site": "maanimandvi",
     "public": "dist/client",
     "ignore": [
       "firebase.json",

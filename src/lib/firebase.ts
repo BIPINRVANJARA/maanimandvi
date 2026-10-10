@@ -2,8 +2,8 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAnalytics, isSupported, type Analytics } from "firebase/analytics";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Maa Ni Mandvi — Firebase configuration
+// Project: sampleproject-24ea9
 export const firebaseConfig = {
   apiKey: "AIzaSyAHBLB8jSWy2wxJ3JcK1WA60xGkbcTyzEA",
   authDomain: "sampleproject-24ea9.firebaseapp.com",
@@ -11,8 +11,8 @@ export const firebaseConfig = {
   projectId: "sampleproject-24ea9",
   storageBucket: "sampleproject-24ea9.firebasestorage.app",
   messagingSenderId: "283881343424",
-  appId: "1:283881343424:web:b09610bd5f6f745f752025",
-  measurementId: "G-7LSX8P5EDY",
+  appId: "1:283881343424:web:08cfd35881d9f78f752025",
+  measurementId: "G-XLJYK7ES2P",
 };
 
 // Initialize Firebase
