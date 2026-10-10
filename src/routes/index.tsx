@@ -3,6 +3,8 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from "react"
 import logoImg from "@/assets/logo.jpg";
 import flyerImg from "@/assets/flyer.jpg";
 import heroPoster from "@/assets/hero-poster.jpg";
+import garbaArenaImg from "@/assets/garba-arena.jpg";
+import venueGateImg from "@/assets/venue-gate.jpg";
 import garbaCircle from "@/assets/garba-circle.jpg";
 import dancer from "@/assets/dancer.jpg";
 import diyas from "@/assets/diyas.jpg";
@@ -50,7 +52,6 @@ const END = new Date("2026-10-20T02:00:00+05:30").getTime();
 const NAV = [
   ["Home", "#home"],
   ["About", "#about"],
-  ["Flyer", "#flyer"],
   ["Passes", "#booking"],
   ["Venue", "#venue"],
   ["FAQ", "#faq"],
@@ -64,7 +65,7 @@ interface TicketDay {
   day: number;
   label: string;
   date: string;
-  price: number | null; // null = price not yet confirmed
+  price: number | null;
 }
 
 const TICKET_DAYS: TicketDay[] = [
@@ -80,7 +81,7 @@ const TICKET_DAYS: TicketDay[] = [
 ];
 
 const FAQ_DATA = [
-  ["Where is Maa Ni Mandvi?", `${VENUE_FULL}. Follow our official announcement flyer for venue landmarks in Khedbrahma.`],
+  ["Where is Maa Ni Mandvi?", `${VENUE_FULL}. Follow our official announcement for venue landmarks in Khedbrahma.`],
   ["When is the event?", "Nine nights, from 11 October to 19 October 2026 in Khedbrahma."],
   ["How do I book passes?", "Choose your Garba night, select ticket count, enter attendee details, and send the request via WhatsApp."],
   ["How does the WhatsApp booking work?", "You will be redirected to WhatsApp with a pre-filled booking message. You must press Send manually. The organiser will then confirm ticket availability and next steps."],
@@ -156,43 +157,6 @@ function Embers({ count = 24 }: { count?: number }) {
   );
 }
 
-/**
- * Official Brand Logo with authentic artwork and correct typography
- * Matching the uploaded logo: માંની માંડવી (નવરાત્રિ)
- */
-function Logo({ size = "lg", showBadge = false }: { size?: "sm" | "lg" | "xl"; showBadge?: boolean }) {
-  const s = {
-    sm: "text-2xl",
-    lg: "text-5xl md:text-7xl",
-    xl: "text-6xl md:text-[8rem]",
-  }[size];
-
-  return (
-    <div className="flex flex-col items-center">
-      {showBadge && (
-        <div className="relative mb-3 flex items-center justify-center">
-          <img
-            src={logoImg}
-            alt="માંની માંડવી નવરાત્રિ Logo"
-            className="h-20 w-20 md:h-28 md:w-28 rounded-full border-2 border-gold object-cover shadow-[0_0_35px_rgba(212,175,55,0.45)] transition hover:scale-105"
-          />
-        </div>
-      )}
-      <div className={`font-deva leading-[0.95] text-center ${s}`} lang="gu">
-        <span className="text-gold block">માંની</span>
-        <span className="text-gold block">માંડવી</span>
-      </div>
-      <div className="mt-2 flex items-center justify-center gap-3">
-        <span className="ornament-rule w-8" />
-        <span className="text-gold-bright font-deva text-sm tracking-[0.3em] uppercase md:text-base" lang="gu">
-          નવરાત્રિ
-        </span>
-        <span className="ornament-rule w-8" />
-      </div>
-    </div>
-  );
-}
-
 function Eyebrow({ children }: { children: ReactNode }) {
   return (
     <div className="flex items-center justify-center gap-4 text-xs font-semibold tracking-[0.4em] text-gold">
@@ -244,7 +208,7 @@ function GoldButton({
 }
 
 /* ═══════════════════════════════════════════════
-   COUNTDOWN TIMER (EXACT SPEC MATCH)
+   COUNTDOWN TIMER
    ═══════════════════════════════════════════════ */
 function Countdown() {
   const [now, setNow] = useState<number | null>(null);
@@ -297,7 +261,7 @@ function Countdown() {
 }
 
 /* ═══════════════════════════════════════════════
-   3D TILT FLYER CARD
+   3D TILT CARD COMPONENT (Used ONCE for the official flyer)
    ═══════════════════════════════════════════════ */
 function FlyerCard() {
   const ref = useRef<HTMLDivElement>(null);
@@ -318,20 +282,15 @@ function FlyerCard() {
       className="cursor-pointer"
     >
       <div
-        className="gold-frame relative overflow-hidden rounded-xl transition-transform duration-200 ease-out shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)]"
+        className="gold-frame relative overflow-hidden rounded-xl transition-transform duration-200 ease-out shadow-[0_25px_65px_-15px_rgba(0,0,0,0.85)]"
         style={{ transform: `rotateX(${t.x}deg) rotateY(${t.y}deg)` }}
       >
         <img
           src={flyerImg}
-          alt="Maa Ni Mandvi 2026 Official Flyer - Khedbrahma"
-          className="block w-full object-cover transition-transform duration-500 hover:scale-[1.02]"
+          alt="Maa Ni Mandvi 2026 Official Announcement Flyer - Khedbrahma"
+          className="block w-full object-cover"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-maroon/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-          <p className="text-xs font-bold tracking-widest text-gold-bright uppercase">
-            📍 KHEDBRAHMA · NAVRATRI 2026
-          </p>
-        </div>
       </div>
     </div>
   );
@@ -361,7 +320,6 @@ function Intro({ onDone }: { onDone: () => void }) {
       <div className="bg-mandala animate-intro-zoom absolute inset-[-20%] rounded-full opacity-70 [mask-image:radial-gradient(circle,black_30%,transparent_70%)]" />
       <Embers count={30} />
       <div className="relative text-center px-4" style={{ perspective: 800 }}>
-        {/* Animated official logo badge */}
         <div className="mb-6 flex justify-center">
           <img
             src={logoImg}
@@ -443,7 +401,6 @@ function Nav() {
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3.5">
-          {/* Logo with official graphic emblem */}
           <a
             href="#home"
             aria-label="Maa Ni Mandvi home"
@@ -464,7 +421,6 @@ function Nav() {
             </div>
           </a>
 
-          {/* Nav links */}
           <nav className="hidden gap-8 lg:flex">
             {NAV.map(([l, h]) => (
               <a
@@ -477,7 +433,6 @@ function Nav() {
             ))}
           </nav>
 
-          {/* Action buttons */}
           <div className="flex items-center gap-3">
             <a
               href="#booking"
@@ -522,7 +477,7 @@ function Nav() {
           માંની માંડવી
         </div>
 
-        {[...NAV, ["FAQ", "#faq"] as const].map(([l, h], i) => (
+        {NAV.map(([l, h], i) => (
           <a
             key={h}
             href={h}
@@ -1017,11 +972,15 @@ Maa Ni Mandvi | Khedbrahma`;
 
       {/* ═══ HERO SECTION ═══ */}
       <section id="home" className="relative flex min-h-screen items-end overflow-hidden bg-ink">
+        {/* Clean, text-free Goddess Durga background (no old logos, no text) */}
         <img
           src={heroPoster}
-          alt="Festive Garba celebration imagery"
-          className="absolute left-1/2 top-0 w-[max(100%,900px)] max-w-none -translate-x-1/2 -translate-y-[6%] opacity-90 [mask-image:linear-gradient(to_bottom,black_34%,transparent_47%)]"
+          alt="Divine Maa Durga Navratri Darshan"
+          className="absolute left-1/2 top-0 w-[max(100%,960px)] max-w-none -translate-x-1/2 -translate-y-[4%] opacity-90 [mask-image:linear-gradient(to_bottom,black_40%,transparent_75%)]"
         />
+
+        {/* Vignette gradients to keep typography ultra-crisp and legible */}
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/75 to-ink/40" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,transparent_30%,var(--ink)_85%)]" />
         <Embers />
 
@@ -1029,7 +988,7 @@ Maa Ni Mandvi | Khedbrahma`;
           <div className="grid items-center gap-12 lg:grid-cols-[1.3fr_0.9fr]">
             {/* Left Column: Branding and Headline */}
             <div className={intro ? "opacity-0" : "animate-rise"}>
-              <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-ink/70 px-4 py-1.5 backdrop-blur-md mb-6">
+              <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-ink/80 px-4 py-1.5 backdrop-blur-md mb-6 shadow-md">
                 <span className="h-2 w-2 rounded-full bg-gold animate-pulse" />
                 <span className="text-[11px] font-bold tracking-[0.3em] text-gold-bright uppercase">
                   📍 KHEDBRAHMA · GUJARAT
@@ -1086,7 +1045,7 @@ Maa Ni Mandvi | Khedbrahma`;
               </div>
             </div>
 
-            {/* Right Column: Official Announcement Flyer Showcase */}
+            {/* Right Column: Official Announcement Flyer (Featured HERE and ONLY here!) */}
             <div className={`hidden lg:block ${intro ? "opacity-0" : "animate-rise"}`} style={{ animationDelay: ".25s" }}>
               <div className="max-w-sm mx-auto">
                 <FlyerCard />
@@ -1099,14 +1058,14 @@ Maa Ni Mandvi | Khedbrahma`;
       {/* ═══ RESTORED COUNTDOWN TIMER ═══ */}
       <Countdown />
 
-      {/* ═══ THE ANNOUNCEMENT / ABOUT ═══ */}
+      {/* ═══ THE MANDVI EXPERIENCE (New unique Garba Arena Artwork) ═══ */}
       <section id="about" className="bg-paper relative py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 md:grid-cols-2">
           <Reveal className="relative">
             <div className="gold-frame overflow-hidden rounded-xl shadow-2xl">
               <img
-                src={flyerImg}
-                alt="Maa Ni Mandvi Khedbrahma Flyer"
+                src={garbaArenaImg}
+                alt="Illuminated Grand Garba Mandvo Arena in Gujarat at Night"
                 className="w-full object-cover"
                 loading="lazy"
               />
@@ -1167,39 +1126,8 @@ Maa Ni Mandvi | Khedbrahma`;
         </div>
       </section>
 
-      {/* ═══ FLYER SHOWCASE SECTION ═══ */}
-      <section id="flyer" className="bg-mandala relative py-24 border-y border-gold/30">
-        <div className="mx-auto max-w-5xl px-6 text-center">
-          <Reveal>
-            <Eyebrow>OFFICIAL ANNOUNCEMENT</Eyebrow>
-            <h2 className="mt-4 font-serif text-4xl font-semibold md:text-5xl">
-              Official Event Flyer
-            </h2>
-            <p className="mt-3 text-cream/75 text-sm max-w-xl mx-auto">
-              Spot the sacred Mandvi logo and official location poster for Maa Ni Mandvi Navratri 2026 in Khedbrahma.
-            </p>
-          </Reveal>
-
-          <Reveal className="mt-12 flex justify-center">
-            <div className="w-full max-w-md">
-              <FlyerCard />
-            </div>
-          </Reveal>
-
-          <div className="mt-8 flex justify-center gap-4">
-            <GoldButton href="#booking">BOOK YOUR PASS NOW →</GoldButton>
-            <GoldButton
-              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi, please share more information about Maa Ni Mandvi passes in Khedbrahma.")}`}
-              ghost
-            >
-              CHAT ON WHATSAPP
-            </GoldButton>
-          </div>
-        </div>
-      </section>
-
       {/* ═══ HOW TO BOOK ═══ */}
-      <section id="passes" className="bg-velvet relative overflow-hidden py-28">
+      <section className="bg-velvet relative overflow-hidden py-28">
         <Embers count={14} />
         <div className="relative mx-auto max-w-5xl px-6">
           <Reveal className="text-center">
@@ -1347,21 +1275,21 @@ Maa Ni Mandvi | Khedbrahma`;
         </div>
       </section>
 
-      {/* ═══ GALLERY SECTION ═══ */}
+      {/* ═══ GALLERY SECTION (Distinct, diverse imagery — no duplicate flyers!) ═══ */}
       <section className="bg-velvet py-28">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal className="text-center">
-            <Eyebrow>MOMENTS & ARTWORK</Eyebrow>
+            <Eyebrow>MOMENTS & CELEBRATION</Eyebrow>
             <h2 className="mt-6 font-serif text-5xl font-semibold">Moments of the Raas</h2>
           </Reveal>
           <div className="mt-14 columns-2 gap-4 md:columns-3 [&>*]:mb-4">
             {[
-              [flyerImg, "OFFICIAL KHEDBRAHMA FLYER"],
-              [logoImg, "SACRED BRAND LOGO"],
+              [garbaArenaImg, "THE MAHA RAAS ARENA"],
+              [venueGateImg, "KHEDBRAHMA GRAND ENTRANCE"],
               [dancer, "THE NIGHT WE DANCED"],
-              [garbaCircle, "GARBA CIRCLE"],
-              [heroPoster, "MAA NI MANDVI"],
-              [diyas, "THE AARTI"],
+              [garbaCircle, "GARBA CIRCLE AT NIGHT"],
+              [heroPoster, "MAA AMBE DIVINE DARSHAN"],
+              [diyas, "THE SACRED AARTI"],
             ].map(([src, cap]) => (
               <figure key={cap} className="group relative break-inside-avoid overflow-hidden rounded-lg">
                 <img
@@ -1384,7 +1312,7 @@ Maa Ni Mandvi | Khedbrahma`;
         </div>
       </section>
 
-      {/* ═══ VENUE SECTION ═══ */}
+      {/* ═══ VENUE SECTION (Featuring the grand Khedbrahma Entrance Gate artwork) ═══ */}
       <section id="venue" className="bg-paper relative py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 md:grid-cols-2">
           <Reveal>
@@ -1424,8 +1352,8 @@ Maa Ni Mandvi | Khedbrahma`;
           <Reveal className="relative">
             <div className="gold-frame overflow-hidden rounded-xl shadow-2xl">
               <img
-                src={flyerImg}
-                alt="Khedbrahma Venue Map Illustration from Official Flyer"
+                src={venueGateImg}
+                alt="Grand entrance gate of Maa Ni Mandvi Khedbrahma"
                 className="w-full object-cover"
                 loading="lazy"
               />
