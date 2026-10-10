@@ -8,6 +8,7 @@ import venueGateImg from "@/assets/venue-gate.jpg";
 import garbaCircle from "@/assets/garba-circle.jpg";
 import dancer from "@/assets/dancer.jpg";
 import diyas from "@/assets/diyas.jpg";
+import { BackgroundMusic } from "@/components/BackgroundMusic";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -968,6 +969,7 @@ Maa Ni Mandvi | Khedbrahma`;
   return (
     <main className="overflow-x-hidden">
       {intro && <Intro onDone={() => setIntro(false)} />}
+      <BackgroundMusic />
       <Nav />
 
       {/* ═══ HERO SECTION ═══ */}
