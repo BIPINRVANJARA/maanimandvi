@@ -75,16 +75,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Maa Ni Mandvi 2026 — માંની માંડવી નવરાત્રિ | Khedbrahma" },
+      { title: "Maa Ni Mandvi 2026 — પોસ્ટ નવરાત્રિ મહોત્સવ | Khedbrahma" },
       {
         name: "description",
         content:
-          "Nine nights of captivating Garba at Khedbrahma, Gujarat. માંની માંડવી નવરાત્રિ 2026 — ગરબાની રાત, હવે નવા સરનામે...! Ancient Rhythms, Modern Heart.",
+          "Maa Ni Mandvi Post Navratri 2026 (23, 24, 25 October 2026) at Khedbrahma. Featuring Khushbu Asodiya, Kajal Maheriya, Neha Suthar. Single day ₹500, 3-Day pass ₹1200.",
       },
-      { property: "og:title", content: "Maa Ni Mandvi 2026 — માંની માંડવી નવરાત્રિ" },
+      { property: "og:title", content: "Maa Ni Mandvi 2026 — પોસ્ટ નવરાત્રિ મહોત્સવ" },
       {
         property: "og:description",
-        content: "ગરબાની રાત, હવે નવા સરનામે...! Khedbrahma, Gujarat. 9 Nights. Passes now live.",
+        content: "3 Days Only: 23, 24, 25 Oct 2026 · Khedbrahma. Single Day ₹500 · 3-Day Pass ₹1200.",
       },
       { property: "og:image", content: "/flyer.jpg" },
       { property: "og:type", content: "website" },

@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import logoImg from "@/assets/logo.jpg";
 import flyerImg from "@/assets/flyer.jpg";
 import heroPoster from "@/assets/hero-poster.jpg";
@@ -8,21 +8,25 @@ import venueGateImg from "@/assets/venue-gate.jpg";
 import garbaCircle from "@/assets/garba-circle.jpg";
 import dancer from "@/assets/dancer.jpg";
 import diyas from "@/assets/diyas.jpg";
+import khushbuImg from "@/assets/artists/khushbu-asodiya.jpg";
+import kajalImg from "@/assets/artists/kajal-maheriya.jpg";
+import nehaImg from "@/assets/artists/neha-suthar.jpg";
 import { BackgroundMusic } from "@/components/BackgroundMusic";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Maa Ni Mandvi 2026 — માંની માંડવી નવરાત્રિ | Khedbrahma" },
+      { title: "Maa Ni Mandvi 2026 — પોસ્ટ નવરાત્રિ મહોત્સવ | Khedbrahma" },
       {
         name: "description",
         content:
-          "Nine nights of captivating Garba. માંની માંડવી નવરાત્રિ 2026, Khedbrahma, Gujarat. ગરબાની રાત, હવે નવા સરનામે...! Ancient Rhythms, Modern Heart. Book your passes now.",
+          "3 Nights of Grand Post Navratri Garba at Khedbrahma. 23, 24, 25 October 2026. Featuring Khushbu Asodiya, Kajal Maheriya, Neha Suthar. Single day ₹500, 3-Day pass ₹1200.",
       },
-      { property: "og:title", content: "Maa Ni Mandvi 2026 — માંની માંડવી નવરાત્રિ" },
+      { property: "og:title", content: "Maa Ni Mandvi 2026 — Post Navratri Mahotsav" },
       {
         property: "og:description",
-        content: "ગરબાની રાત, હવે નવા સરનામે...! Khedbrahma, Gujarat. 9 Nights. Passes now live.",
+        content:
+          "3 Days Only: 23, 24, 25 Oct 2026. Near Khedbrahma Court, Ambaji - Ahmedabad State Highway. Single Day ₹500 · 3-Day Pass ₹1200.",
       },
       { property: "og:image", content: "/flyer.jpg" },
       { property: "og:type", content: "website" },
@@ -37,77 +41,92 @@ export const Route = createFileRoute("/")({
    ═══════════════════════════════════════════════ */
 
 const WHATSAPP_NUMBER = "917600280047";
+const WHATSAPP_DISPLAY = "+91 76002 80047";
+const HELPLINE_PHONE = "+91 99999 15015";
+const HELPLINE_RAW = "9999915015";
 const INSTAGRAM_URL = "https://www.instagram.com/maa.ni.mandvi/";
-const PHONE = "7600280047";
-const PHONE_DISPLAY = "+91 76002 80047";
 
 // Venue
-const VENUE_NAME = "Khedbrahma";
-const VENUE_FULL = "Khedbrahma, Gujarat";
+const VENUE_NAME = "Near Khedbrahma Court";
+const VENUE_FULL = "Near Khedbrahma Court, Ambaji - Ahmedabad State Highway, Khedbrahma";
+const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/MCpFCxfdE8JMz5GJ6";
 
-// Event dates: Navratri 2026 (11 Oct – 19 Oct 2026)
-const EVENT_DATES = "11 OCT — 19 OCT 2026";
-const START = new Date("2026-10-11T19:00:00+05:30").getTime();
-const END = new Date("2026-10-20T02:00:00+05:30").getTime();
+// Event dates: Post Navratri 2026 (23, 24, 25 October 2026)
+const EVENT_DATES = "23 OCT — 25 OCT 2026";
+const START = new Date("2026-10-23T19:00:00+05:30").getTime();
+const END = new Date("2026-10-26T02:00:00+05:30").getTime();
 
 const NAV = [
   ["Home", "#home"],
   ["About", "#about"],
-  ["Passes", "#booking"],
+  ["Singers", "#singers"],
+  ["Passes", "#passes"],
   ["Venue", "#venue"],
   ["FAQ", "#faq"],
 ] as const;
 
 /* ═══════════════════════════════════════════════
-   TICKET DATA — 9 Garba nights
-   Day 1 = ₹199, Day 2–9 = TBC
+   STAR ARTISTS DATA
    ═══════════════════════════════════════════════ */
-interface TicketDay {
-  day: number;
-  label: string;
-  date: string;
-  price: number | null;
-}
-
-const TICKET_DAYS: TicketDay[] = [
-  { day: 1, label: "Day 1", date: "11 Oct 2026", price: 199 },
-  { day: 2, label: "Day 2", date: "12 Oct 2026", price: null },
-  { day: 3, label: "Day 3", date: "13 Oct 2026", price: null },
-  { day: 4, label: "Day 4", date: "14 Oct 2026", price: null },
-  { day: 5, label: "Day 5", date: "15 Oct 2026", price: null },
-  { day: 6, label: "Day 6", date: "16 Oct 2026", price: null },
-  { day: 7, label: "Day 7", date: "17 Oct 2026", price: null },
-  { day: 8, label: "Day 8", date: "18 Oct 2026", price: null },
-  { day: 9, label: "Day 9", date: "19 Oct 2026", price: null },
+const SINGERS = [
+  {
+    day: "DAY 1",
+    date: "23 OCT 2026",
+    weekday: "Friday",
+    name: "Khushbu Asodiya",
+    gujaratiName: "ખુશ્બુ અસોડિયા",
+    image: khushbuImg,
+    badge: "OPENING NIGHT",
+    price: "₹500",
+  },
+  {
+    day: "DAY 2",
+    date: "24 OCT 2026",
+    weekday: "Saturday",
+    name: "Kajal Maheriya",
+    gujaratiName: "કાજલ મહેરિયા",
+    image: kajalImg,
+    badge: "WEEKEND SPECIAL",
+    price: "₹500",
+  },
+  {
+    day: "DAY 3",
+    date: "25 OCT 2026",
+    weekday: "Sunday",
+    name: "Neha Suthar",
+    gujaratiName: "નેહા સુથાર",
+    image: nehaImg,
+    badge: "GRAND FINALE",
+    price: "₹500",
+  },
 ];
 
 const FAQ_DATA = [
-  ["Where is Maa Ni Mandvi?", `${VENUE_FULL}. Follow our official announcement for venue landmarks in Khedbrahma.`],
-  ["When is the event?", "Nine nights, from 11 October to 19 October 2026 in Khedbrahma."],
-  ["How do I book passes?", "Choose your Garba night, select ticket count, enter attendee details, and send the request via WhatsApp."],
-  ["How does the WhatsApp booking work?", "You will be redirected to WhatsApp with a pre-filled booking message. You must press Send manually. The organiser will then confirm ticket availability and next steps."],
-  ["What is the ticket price?", "Day 1 passes are ₹199 per ticket. Prices for Day 2 to Day 9 will be announced soon by the organiser."],
-  ["Who do I contact for more information?", `Call or WhatsApp ${PHONE_DISPLAY} or DM @maa.ni.mandvi on Instagram.`],
+  [
+    "When is the Post Navratri event?",
+    "3 magical nights from 23 October to 25 October 2026 (Friday, Saturday & Sunday) starting at 7:00 PM.",
+  ],
+  [
+    "Who are the performing artists?",
+    "23 Oct: Khushbu Asodiya | 24 Oct: Kajal Maheriya | 25 Oct: Neha Suthar.",
+  ],
+  [
+    "What are the ticket prices?",
+    "Single Day Pass is ₹500 per day. Full 3-Day Season Pass is ₹1200 (saves ₹300 for all 3 days).",
+  ],
+  [
+    "Where is the venue?",
+    "Near Khedbrahma Court, Ambaji - Ahmedabad State Highway, Khedbrahma. Click the 'Get Directions' button on this website to open in Google Maps.",
+  ],
+  [
+    "How do I book passes?",
+    "Click the 'GET YOUR PASS' button to visit our dedicated booking page, choose your passes, and send your booking request via WhatsApp directly to the organizers.",
+  ],
+  [
+    "Who do I contact for questions?",
+    `WhatsApp: ${WHATSAPP_DISPLAY} | Calling Helpline: ${HELPLINE_PHONE} | Instagram: @maa.ni.mandvi.`,
+  ],
 ];
-
-/* ═══════════════════════════════════════════════
-   BOOKING STATE
-   ═══════════════════════════════════════════════ */
-type BookingStep = "select" | "details" | "review";
-
-interface BookingState {
-  quantities: Record<number, number>;
-  name: string;
-  phone: string;
-  termsAccepted: boolean;
-}
-
-const initialBooking: BookingState = {
-  quantities: {},
-  name: "",
-  phone: "",
-  termsAccepted: false,
-};
 
 /* ═══════════════════════════════════════════════
    HELPERS & SHARED COMPONENTS
@@ -188,6 +207,13 @@ function GoldButton({
     : "bg-gold inline-flex items-center gap-2 px-7 py-4 text-xs font-bold tracking-[0.3em] text-ink shadow-[0_10px_40px_-10px_var(--gold)] transition hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer";
 
   if (href) {
+    if (href.startsWith("/")) {
+      return (
+        <Link to={href} className={cls}>
+          {children}
+        </Link>
+      );
+    }
     const ext = href.startsWith("http");
     return (
       <a
@@ -209,7 +235,7 @@ function GoldButton({
 }
 
 /* ═══════════════════════════════════════════════
-   COUNTDOWN TIMER
+   COUNTDOWN TIMER (TARGET: 23 OCT 2026)
    ═══════════════════════════════════════════════ */
 function Countdown() {
   const [now, setNow] = useState<number | null>(null);
@@ -252,7 +278,7 @@ function Countdown() {
               ))}
             </div>
             <p className="mt-10 text-xs font-semibold tracking-[0.5em] text-cream">
-              UNTIL THE FIRST RAAS
+              UNTIL THE FIRST RAAS · 23 OCT 2026
             </p>
           </>
         )}
@@ -262,7 +288,7 @@ function Countdown() {
 }
 
 /* ═══════════════════════════════════════════════
-   3D TILT CARD COMPONENT (Used ONCE for the official flyer)
+   3D TILT FLYER CARD
    ═══════════════════════════════════════════════ */
 function FlyerCard() {
   const ref = useRef<HTMLDivElement>(null);
@@ -288,7 +314,7 @@ function FlyerCard() {
       >
         <img
           src={flyerImg}
-          alt="Maa Ni Mandvi 2026 Official Announcement Flyer - Khedbrahma"
+          alt="Maa Ni Mandvi 2026 Official Flyer - Khedbrahma"
           className="block w-full object-cover"
           loading="lazy"
         />
@@ -304,8 +330,8 @@ function Intro({ onDone }: { onDone: () => void }) {
   const [leaving, setLeaving] = useState(false);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setLeaving(true), 4500);
-    const t2 = setTimeout(onDone, 5300);
+    const t1 = setTimeout(() => setLeaving(true), 4000);
+    const t2 = setTimeout(onDone, 4700);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
@@ -326,45 +352,29 @@ function Intro({ onDone }: { onDone: () => void }) {
             src={logoImg}
             alt="માંની માંડવી"
             className="h-28 w-28 md:h-36 md:w-36 rounded-full border-2 border-gold object-cover shadow-[0_0_40px_rgba(212,175,55,0.6)] animate-rise"
-            style={{ animationDelay: "1s" }}
+            style={{ animationDelay: "0.8s" }}
           />
         </div>
 
-        <div className="font-deva text-7xl leading-[0.95] md:text-9xl" lang="gu">
-          <span className="text-gold animate-letter block" style={{ animationDelay: "1.8s" }}>
-            માંની
-          </span>
-          <span className="text-gold animate-letter block" style={{ animationDelay: "2.4s" }}>
-            માંડવી
+        <div className="font-deva text-6xl leading-[0.95] md:text-8xl" lang="gu">
+          <span className="text-gold animate-letter block" style={{ animationDelay: "1.5s" }}>
+            માંની માંડવી
           </span>
         </div>
-
-        <svg viewBox="0 0 300 30" className="mx-auto mt-3 w-64">
-          <path
-            d="M10 20 Q150 -5 290 20"
-            fill="none"
-            stroke="var(--gold)"
-            strokeWidth="2"
-            strokeDasharray="2 6"
-            strokeLinecap="round"
-            style={{ strokeDashoffset: 400, animation: "draw 1s ease forwards 3.2s" }}
-            pathLength={400}
-          />
-        </svg>
 
         <p
-          className="animate-rise mt-4 font-deva text-sm tracking-[0.3em] text-gold-bright"
-          style={{ animationDelay: "3.6s" }}
+          className="animate-rise mt-4 font-deva text-base tracking-[0.3em] text-gold-bright"
+          style={{ animationDelay: "2.3s" }}
           lang="gu"
         >
-          ગરબાની રાત, હવે નવા સરનામે...!
+          પોસ્ટ નવરાત્રિ મહોત્સવ ૨૦૨૬
         </p>
 
         <p
           className="animate-rise mt-2 text-[11px] font-semibold tracking-[0.5em] text-cream"
-          style={{ animationDelay: "3.9s" }}
+          style={{ animationDelay: "2.8s" }}
         >
-          📍 KHEDBRAHMA · 2026
+          ૨૩ · ૨૪ · ૨૫ OCT · KHEDBRAHMA
         </p>
       </div>
 
@@ -397,7 +407,7 @@ function Nav() {
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "border-b border-gold/30 bg-maroon/85 backdrop-blur-md"
+            ? "border-b border-gold/30 bg-maroon/90 backdrop-blur-md"
             : "bg-transparent"
         }`}
       >
@@ -409,7 +419,7 @@ function Nav() {
           >
             <img
               src={logoImg}
-              alt="માંની માંડવી નવરાત્રિ"
+              alt="માંની માંડવી"
               className="h-10 w-10 md:h-11 md:w-11 rounded-full border border-gold/60 object-cover shadow-md transition group-hover:scale-105"
             />
             <div className="leading-tight text-left">
@@ -417,7 +427,7 @@ function Nav() {
                 માંની માંડવી
               </span>
               <span className="text-[9px] tracking-[0.25em] text-gold-bright block -mt-0.5">
-                નવરાત્રિ · KHEDBRAHMA
+                POST NAVRATRI · KHEDBRAHMA
               </span>
             </div>
           </a>
@@ -435,12 +445,12 @@ function Nav() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <a
-              href="#booking"
+            <Link
+              to="/book"
               className="bg-gold hidden px-5 py-2.5 text-[11px] font-bold tracking-[0.25em] text-ink sm:inline-block transition hover:brightness-110 shadow-sm"
             >
-              GET YOUR PASS
-            </a>
+              BOOK PASSES
+            </Link>
             <button
               aria-label="Open menu"
               onClick={() => setOpen(true)}
@@ -477,6 +487,9 @@ function Nav() {
         <div className="font-deva text-3xl text-gold" lang="gu">
           માંની માંડવી
         </div>
+        <p className="text-xs tracking-widest text-gold-bright -mt-4">
+          POST NAVRATRI · 23-25 OCT 2026
+        </p>
 
         {NAV.map(([l, h], i) => (
           <a
@@ -493,417 +506,16 @@ function Nav() {
         ))}
 
         <div className="mt-4">
-          <GoldButton
-            onClick={() => {
-              setOpen(false);
-              const el = document.getElementById("booking");
-              el?.scrollIntoView({ behavior: "smooth" });
-            }}
+          <Link
+            to="/book"
+            onClick={() => setOpen(false)}
+            className="inline-block bg-gold px-8 py-3.5 text-xs font-bold tracking-[0.25em] text-ink uppercase"
           >
-            GET YOUR PASS →
-          </GoldButton>
+            BOOK PASSES →
+          </Link>
         </div>
       </div>
     </>
-  );
-}
-
-/* ═══════════════════════════════════════════════
-   TICKET SELECTOR (STEP 1)
-   ═══════════════════════════════════════════════ */
-function TicketSelector({
-  booking,
-  setBooking,
-  onContinue,
-}: {
-  booking: BookingState;
-  setBooking: React.Dispatch<React.SetStateAction<BookingState>>;
-  onContinue: () => void;
-}) {
-  const getQty = (day: number) => booking.quantities[day] || 0;
-
-  const setQty = (day: number, qty: number) => {
-    setBooking((prev) => ({
-      ...prev,
-      quantities: { ...prev.quantities, [day]: Math.max(0, qty) },
-    }));
-  };
-
-  const totalTickets = Object.values(booking.quantities).reduce((a, b) => a + b, 0);
-  const hasUnpricedSelection = TICKET_DAYS.some((d) => d.price === null && getQty(d.day) > 0);
-  const confirmedSubtotal = TICKET_DAYS.reduce((sum, d) => {
-    if (d.price !== null) return sum + d.price * getQty(d.day);
-    return sum;
-  }, 0);
-  const canContinue = totalTickets > 0 && !hasUnpricedSelection;
-
-  return (
-    <div>
-      <div className="text-center mb-10">
-        <Eyebrow>STEP 1 · SELECT PASSES</Eyebrow>
-        <h2 className="mt-4 font-serif text-4xl font-semibold md:text-5xl">
-          Choose Your Garba Nights
-        </h2>
-        <p className="mt-3 text-cream/70 text-sm max-w-lg mx-auto">
-          Nine nights of ancient rhythms and modern heart in Khedbrahma. Adjust ticket quantities for each night.
-        </p>
-      </div>
-
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {TICKET_DAYS.map((td) => {
-          const qty = getQty(td.day);
-          const isSelected = qty > 0;
-          return (
-            <div
-              key={td.day}
-              className={`relative rounded-xl border p-5 transition-all duration-300 ${
-                isSelected
-                  ? "border-gold bg-crimson/30 shadow-[0_0_25px_rgba(212,175,55,0.2)]"
-                  : "border-gold/30 bg-maroon/40 hover:border-gold/60"
-              }`}
-            >
-              {isSelected && (
-                <div className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-gold text-[10px] font-bold text-ink shadow-md">
-                  ✓
-                </div>
-              )}
-
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-serif text-2xl font-semibold text-gold-bright">{td.label}</p>
-                  <p className="mt-1 text-xs text-muted-foreground tracking-wider">{td.date}</p>
-                </div>
-                <div className="text-right">
-                  {td.price !== null ? (
-                    <p className="font-serif text-xl font-bold text-cream">₹{td.price}</p>
-                  ) : (
-                    <p className="text-xs font-semibold text-gold/70 tracking-wider">PRICE TBC</p>
-                  )}
-                  <p className="text-[10px] text-muted-foreground">per ticket</p>
-                </div>
-              </div>
-
-              {/* Quantity selector */}
-              <div className="mt-4 flex items-center justify-between">
-                <span className="text-xs font-semibold tracking-wider text-cream/80">QUANTITY</span>
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setQty(td.day, qty - 1)}
-                    disabled={qty === 0}
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-gold/50 text-gold transition hover:bg-gold hover:text-ink disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
-                    aria-label={`Decrease ${td.label} quantity`}
-                  >
-                    −
-                  </button>
-                  <span className="w-8 text-center font-serif text-xl font-bold text-cream tabular-nums">
-                    {qty}
-                  </span>
-                  <button
-                    onClick={() => {
-                      if (td.price === null) return;
-                      setQty(td.day, qty + 1);
-                    }}
-                    disabled={td.price === null}
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-gold/50 text-gold transition hover:bg-gold hover:text-ink disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
-                    aria-label={`Increase ${td.label} quantity`}
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
-              {isSelected && td.price !== null && (
-                <div className="mt-3 border-t border-gold/20 pt-3 text-right">
-                  <span className="text-xs text-muted-foreground">Subtotal: </span>
-                  <span className="font-serif text-lg font-bold text-gold-bright">
-                    ₹{td.price * qty}
-                  </span>
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Summary bar */}
-      <div className="mt-8 rounded-xl border border-gold/40 bg-ink/60 p-6">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <p className="text-xs font-semibold tracking-wider text-muted-foreground">
-              TOTAL TICKETS
-            </p>
-            <p className="font-serif text-3xl font-bold text-cream">{totalTickets}</p>
-          </div>
-          <div className="text-right">
-            <p className="text-xs font-semibold tracking-wider text-muted-foreground">
-              CONFIRMED SUBTOTAL
-            </p>
-            <p className="font-serif text-3xl font-bold text-gold-bright">₹{confirmedSubtotal}</p>
-          </div>
-        </div>
-
-        {hasUnpricedSelection && (
-          <p className="mt-4 text-sm text-[#ff6b6b] font-medium">
-            ⚠ You have selected days with unconfirmed prices. Please remove those selections to proceed.
-          </p>
-        )}
-
-        <div className="mt-6 flex justify-end">
-          <GoldButton onClick={onContinue} disabled={!canContinue}>
-            CONTINUE →
-          </GoldButton>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════
-   ATTENDEE FORM (STEP 2)
-   ═══════════════════════════════════════════════ */
-interface FormErrors {
-  name?: string;
-  phone?: string;
-  terms?: string;
-}
-
-function AttendeeForm({
-  booking,
-  setBooking,
-  onContinue,
-  onBack,
-}: {
-  booking: BookingState;
-  setBooking: React.Dispatch<React.SetStateAction<BookingState>>;
-  onContinue: () => void;
-  onBack: () => void;
-}) {
-  const [errors, setErrors] = useState<FormErrors>({});
-
-  const validate = () => {
-    const errs: FormErrors = {};
-    const trimmedName = booking.name.trim();
-    if (!trimmedName) errs.name = "Full name is required.";
-    if (!booking.phone.trim()) errs.phone = "Phone number is required.";
-    else if (!/^[6-9]\d{9}$/.test(booking.phone.replace(/\s/g, "")))
-      errs.phone = "Enter a valid 10-digit Indian mobile number.";
-    if (!booking.termsAccepted) errs.terms = "You must accept the terms and conditions.";
-    setErrors(errs);
-    return Object.keys(errs).length === 0;
-  };
-
-  const handleSubmit = () => {
-    if (validate()) {
-      setBooking((prev) => ({ ...prev, name: prev.name.trim().replace(/\s+/g, " ") }));
-      onContinue();
-    }
-  };
-
-  return (
-    <div className="max-w-xl mx-auto">
-      <div className="text-center mb-10">
-        <Eyebrow>STEP 2 · ATTENDEE DETAILS</Eyebrow>
-        <h2 className="mt-4 font-serif text-4xl font-semibold md:text-5xl">Your Details</h2>
-        <p className="mt-3 text-cream/70 text-sm">
-          Enter attendee details to prefill the WhatsApp booking request.
-        </p>
-      </div>
-
-      <div className="space-y-6">
-        <div>
-          <label htmlFor="attendee-name" className="block text-xs font-semibold tracking-wider text-gold mb-2">
-            FULL NAME *
-          </label>
-          <input
-            id="attendee-name"
-            type="text"
-            value={booking.name}
-            onChange={(e) => {
-              setBooking((prev) => ({ ...prev, name: e.target.value }));
-              if (errors.name) setErrors((prev) => ({ ...prev, name: "" }));
-            }}
-            placeholder="Enter your full name"
-            className="w-full rounded-lg border border-gold/40 bg-ink/60 px-4 py-3 text-cream placeholder:text-cream/40 outline-none transition focus:border-gold focus:shadow-[0_0_15px_rgba(212,175,55,0.2)]"
-          />
-          {errors.name && <p className="mt-1 text-sm text-[#ff6b6b]">{errors.name}</p>}
-        </div>
-
-        <div>
-          <label htmlFor="attendee-phone" className="block text-xs font-semibold tracking-wider text-gold mb-2">
-            PHONE NUMBER *
-          </label>
-          <div className="flex">
-            <span className="flex items-center rounded-l-lg border border-r-0 border-gold/40 bg-maroon/60 px-3 text-sm text-gold">
-              +91
-            </span>
-            <input
-              id="attendee-phone"
-              type="tel"
-              value={booking.phone}
-              onChange={(e) => {
-                const val = e.target.value.replace(/[^0-9\s]/g, "");
-                setBooking((prev) => ({ ...prev, phone: val }));
-                if (errors.phone) setErrors((prev) => ({ ...prev, phone: "" }));
-              }}
-              placeholder="9876543210"
-              maxLength={10}
-              className="w-full rounded-r-lg border border-gold/40 bg-ink/60 px-4 py-3 text-cream placeholder:text-cream/40 outline-none transition focus:border-gold focus:shadow-[0_0_15px_rgba(212,175,55,0.2)]"
-            />
-          </div>
-          {errors.phone && <p className="mt-1 text-sm text-[#ff6b6b]">{errors.phone}</p>}
-        </div>
-
-        <div>
-          <label className="flex items-start gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={booking.termsAccepted}
-              onChange={(e) => {
-                setBooking((prev) => ({ ...prev, termsAccepted: e.target.checked }));
-                if (errors.terms) setErrors((prev) => ({ ...prev, terms: "" }));
-              }}
-              className="mt-1 h-4 w-4 accent-[var(--gold)]"
-            />
-            <span className="text-sm text-cream/80">
-              I accept the{" "}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  alert(
-                    "Terms & Conditions — Maa Ni Mandvi 2026:\n\n1. This website generates a booking request for WhatsApp.\n2. Pass availability is confirmed directly by the event organisers upon receiving your message.\n3. No payment is collected on this website.\n4. Tickets are subject to venue capacity and organizer confirmation.\n5. Event rules of Maa Ni Mandvi Khedbrahma apply."
-                  );
-                }}
-                className="text-gold underline hover:text-gold-bright"
-              >
-                terms and conditions
-              </button>
-              .
-            </span>
-          </label>
-          {errors.terms && <p className="mt-1 text-sm text-[#ff6b6b]">{errors.terms}</p>}
-        </div>
-      </div>
-
-      <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
-        <GoldButton onClick={onBack} ghost>
-          ← BACK
-        </GoldButton>
-        <GoldButton onClick={handleSubmit}>REVIEW BOOKING →</GoldButton>
-      </div>
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════
-   BOOKING REVIEW (STEP 3)
-   ═══════════════════════════════════════════════ */
-function BookingReview({
-  booking,
-  onBack,
-  onWhatsApp,
-}: {
-  booking: BookingState;
-  onBack: () => void;
-  onWhatsApp: () => void;
-}) {
-  const selectedDays = TICKET_DAYS.filter((d) => (booking.quantities[d.day] || 0) > 0);
-  const totalTickets = selectedDays.reduce((sum, d) => sum + (booking.quantities[d.day] || 0), 0);
-  const subtotal = selectedDays.reduce((sum, d) => sum + (d.price || 0) * (booking.quantities[d.day] || 0), 0);
-  const additionalFees = 0;
-  const total = subtotal + additionalFees;
-
-  return (
-    <div className="max-w-xl mx-auto">
-      <div className="text-center mb-10">
-        <Eyebrow>STEP 3 · REVIEW & CONFIRM</Eyebrow>
-        <h2 className="mt-4 font-serif text-4xl font-semibold md:text-5xl">Review Booking</h2>
-        <p className="mt-3 text-cream/70 text-sm">
-          Review your booking before sending the request to the organiser on WhatsApp.
-        </p>
-      </div>
-
-      <div className="rounded-xl border border-gold/40 bg-ink/60 overflow-hidden">
-        <div className="border-b border-gold/20 p-5">
-          <p className="text-[10px] font-bold tracking-[0.4em] text-muted-foreground mb-3">
-            ATTENDEE DETAILS
-          </p>
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="font-serif text-xl font-semibold text-cream">{booking.name}</p>
-              <p className="text-sm text-cream/70">+91 {booking.phone}</p>
-            </div>
-            <span className="text-[10px] font-bold tracking-wider text-gold bg-gold/10 border border-gold/30 px-2.5 py-1 rounded-full">
-              VALIDATED
-            </span>
-          </div>
-        </div>
-
-        <div className="border-b border-gold/20 p-5">
-          <p className="text-[10px] font-bold tracking-[0.4em] text-muted-foreground mb-3">
-            YOUR BOOKING
-          </p>
-          <div className="space-y-3">
-            {selectedDays.map((d) => {
-              const qty = booking.quantities[d.day] || 0;
-              const lineTotal = (d.price || 0) * qty;
-              return (
-                <div key={d.day} className="flex items-center justify-between text-sm">
-                  <div>
-                    <span className="font-semibold text-cream">{d.label}</span>
-                    <span className="text-cream/60 ml-2">
-                      {qty} ticket{qty > 1 ? "s" : ""} × ₹{d.price}
-                    </span>
-                  </div>
-                  <span className="font-serif text-lg font-bold text-gold-bright">₹{lineTotal}</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="p-5">
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span className="text-cream/70">Total Tickets</span>
-              <span className="font-semibold text-cream">{totalTickets}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-cream/70">Ticket Subtotal</span>
-              <span className="font-semibold text-cream">₹{subtotal}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-cream/70">Additional Fees</span>
-              <span className="font-semibold text-cream">₹{additionalFees}</span>
-            </div>
-            <div className="h-px bg-gold/30 my-2" />
-            <div className="flex justify-between">
-              <span className="font-bold text-gold tracking-wider text-xs">TOTAL PAYABLE</span>
-              <span className="font-serif text-2xl font-bold text-gold-bright">₹{total}</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-gold/20 p-5">
-          <p className="text-xs text-cream/60">
-            ✓ Terms and Conditions: <span className="text-gold font-semibold">Accepted</span>
-          </p>
-        </div>
-      </div>
-
-      <div className="mt-6 rounded-lg border border-gold/30 bg-maroon/40 p-4">
-        <p className="text-xs text-cream/80 leading-relaxed">
-          <strong className="text-gold">Important:</strong> Clicking below will launch WhatsApp with your pre-filled message. You must manually press <strong>Send</strong> in WhatsApp. This sends your booking request; the organiser will confirm ticket availability.
-        </p>
-      </div>
-
-      <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-        <GoldButton onClick={onBack} ghost>
-          ← EDIT BOOKING
-        </GoldButton>
-        <GoldButton onClick={onWhatsApp}>CONTINUE TO WHATSAPP →</GoldButton>
-      </div>
-    </div>
   );
 }
 
@@ -912,65 +524,6 @@ function BookingReview({
    ═══════════════════════════════════════════════ */
 function Index() {
   const [intro, setIntro] = useState(true);
-  const [bookingStep, setBookingStep] = useState<BookingStep>("select");
-  const [booking, setBooking] = useState<BookingState>(initialBooking);
-
-  const bookingRef = useRef<HTMLElement>(null);
-
-  const scrollToBooking = useCallback(() => {
-    bookingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, []);
-
-  const handleStepChange = useCallback(
-    (step: BookingStep) => {
-      setBookingStep(step);
-      setTimeout(scrollToBooking, 100);
-    },
-    [scrollToBooking],
-  );
-
-  const buildWhatsAppUrl = useCallback(() => {
-    const selectedDays = TICKET_DAYS.filter((d) => (booking.quantities[d.day] || 0) > 0);
-    const totalTickets = selectedDays.reduce((sum, d) => sum + (booking.quantities[d.day] || 0), 0);
-    const subtotal = selectedDays.reduce((sum, d) => sum + (d.price || 0) * (booking.quantities[d.day] || 0), 0);
-    const additionalFees = 0;
-    const total = subtotal + additionalFees;
-
-    const bookingLines = selectedDays
-      .map((d) => {
-        const qty = booking.quantities[d.day] || 0;
-        const amt = (d.price || 0) * qty;
-        return `${d.label} × ${qty} = ₹${amt}`;
-      })
-      .join("\n");
-
-    const message = `Maa Ni Mandvi — Garba Pass Booking
-
-Attendee Details
-Name: ${booking.name}
-Phone: +91 ${booking.phone}
-
-Booking Details
-${bookingLines}
-
-Total Tickets: ${totalTickets}
-Ticket Subtotal: ₹${subtotal}
-Additional Fees: ₹${additionalFees}
-Total Payable: ₹${total}
-
-Terms and Conditions: Accepted
-
-Please review my booking request and confirm availability and the next steps for completing the booking.
-
-Thank you!
-Maa Ni Mandvi | Khedbrahma`;
-
-    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  }, [booking]);
-
-  const handleWhatsApp = useCallback(() => {
-    window.open(buildWhatsAppUrl(), "_blank");
-  }, [buildWhatsAppUrl]);
 
   return (
     <main className="overflow-x-hidden">
@@ -980,14 +533,12 @@ Maa Ni Mandvi | Khedbrahma`;
 
       {/* ═══ HERO SECTION ═══ */}
       <section id="home" className="relative flex min-h-screen items-end overflow-hidden bg-ink">
-        {/* Clean, text-free Goddess Durga background (no old logos, no text) */}
         <img
           src={heroPoster}
           alt="Divine Maa Durga Navratri Darshan"
           className="absolute left-1/2 top-0 w-[max(100%,960px)] max-w-none -translate-x-1/2 -translate-y-[4%] opacity-90 [mask-image:linear-gradient(to_bottom,black_40%,transparent_75%)]"
         />
 
-        {/* Vignette gradients to keep typography ultra-crisp and legible */}
         <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/75 to-ink/40" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,transparent_30%,var(--ink)_85%)]" />
         <Embers />
@@ -999,16 +550,15 @@ Maa Ni Mandvi | Khedbrahma`;
               <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-ink/80 px-4 py-1.5 backdrop-blur-md mb-6 shadow-md">
                 <span className="h-2 w-2 rounded-full bg-gold animate-pulse" />
                 <span className="text-[11px] font-bold tracking-[0.3em] text-gold-bright uppercase">
-                  📍 KHEDBRAHMA · GUJARAT
+                  POST NAVRATRI · 23 — 25 OCT 2026
                 </span>
               </div>
 
-              {/* Exact name with Logo Badge */}
               <div className="flex flex-col items-start gap-4">
                 <div className="flex items-center gap-4">
                   <img
                     src={logoImg}
-                    alt="માંની માંડવી નવરાત્રિ Logo"
+                    alt="માંની માંડવી Logo"
                     className="h-20 w-20 md:h-24 md:w-24 rounded-full border-2 border-gold object-cover shadow-[0_0_30px_rgba(212,175,55,0.4)]"
                   />
                   <div>
@@ -1016,7 +566,7 @@ Maa Ni Mandvi | Khedbrahma`;
                       માંની માંડવી
                     </h1>
                     <p className="font-deva text-lg md:text-xl text-gold-bright tracking-wider mt-1" lang="gu">
-                      નવરાત્રિ ૨૦૨૬
+                      પોસ્ટ નવરાત્રિ મહોત્સવ ૨૦૨૬
                     </p>
                   </div>
                 </div>
@@ -1026,7 +576,7 @@ Maa Ni Mandvi | Khedbrahma`;
                 </p>
 
                 <p className="font-serif text-xl italic text-cream/90 md:text-2xl">
-                  Ancient Rhythms, Modern Heart ✨️
+                  3 Nights · 3 Mega Stars · Khedbrahma ✨️
                 </p>
               </div>
 
@@ -1035,25 +585,34 @@ Maa Ni Mandvi | Khedbrahma`;
                 <p className="font-serif text-2xl font-semibold text-gold-bright md:text-3xl">
                   {EVENT_DATES}
                 </p>
-                <p className="mt-2 text-sm font-bold tracking-[0.3em] text-cream">
+                <p className="mt-2 text-sm font-bold tracking-[0.2em] text-cream">
                   {VENUE_NAME.toUpperCase()}
                 </p>
                 <p className="mt-1 text-sm text-muted-foreground">{VENUE_FULL}</p>
+                <div className="mt-3 flex flex-wrap items-center gap-4 text-xs">
+                  <span className="text-gold font-bold">Single Day Pass: ₹500</span>
+                  <span className="text-gold-bright font-bold">3-Day Pass: ₹1,200</span>
+                </div>
               </div>
 
               {/* CTAs */}
               <div className="mt-8 flex flex-wrap gap-3">
-                <GoldButton href="#booking">GET YOUR PASS →</GoldButton>
+                <Link
+                  to="/book"
+                  className="bg-gold inline-flex items-center gap-2 px-7 py-4 text-xs font-bold tracking-[0.3em] text-ink shadow-[0_10px_40px_-10px_var(--gold)] transition hover:brightness-110 uppercase"
+                >
+                  BOOK YOUR PASS →
+                </Link>
                 <GoldButton
-                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi, I'm interested in Maa Ni Mandvi Garba passes for Khedbrahma.")}`}
+                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi, I want to book passes for Maa Ni Mandvi Post Navratri (23-25 Oct 2026).")}`}
                   ghost
                 >
-                  CONTACT ON WHATSAPP
+                  WHATSAPP BOOKING
                 </GoldButton>
               </div>
             </div>
 
-            {/* Right Column: Official Announcement Flyer (Featured HERE and ONLY here!) */}
+            {/* Right Column: Official Announcement Flyer */}
             <div className={`hidden lg:block ${intro ? "opacity-0" : "animate-rise"}`} style={{ animationDelay: ".25s" }}>
               <div className="max-w-sm mx-auto">
                 <FlyerCard />
@@ -1066,7 +625,82 @@ Maa Ni Mandvi | Khedbrahma`;
       {/* ═══ RESTORED COUNTDOWN TIMER ═══ */}
       <Countdown />
 
-      {/* ═══ THE MANDVI EXPERIENCE (New unique Garba Arena Artwork) ═══ */}
+      {/* ═══ SINGER LINEUP SECTION (NEW!) ═══ */}
+      <section id="singers" className="bg-velvet relative overflow-hidden py-28 border-t border-gold/30">
+        <Embers count={16} />
+        <div className="relative mx-auto max-w-7xl px-6">
+          <Reveal className="text-center">
+            <Eyebrow>STAR LINEUP · 3 MEGA CELEBRITIES</Eyebrow>
+            <h2 className="mt-4 font-serif text-4xl md:text-6xl font-semibold text-cream">
+              Grand Post Navratri <span className="text-gold">Artists</span>
+            </h2>
+            <p className="mt-3 text-cream/75 text-sm md:text-base max-w-2xl mx-auto">
+              Three consecutive nights of enchanting Garba led by Gujarat's most celebrated vocalists.
+            </p>
+          </Reveal>
+
+          <div className="mt-16 grid gap-8 md:grid-cols-3">
+            {SINGERS.map((s, idx) => (
+              <Reveal key={s.name} className="flex">
+                <div className="group relative w-full rounded-2xl border-2 border-gold/40 bg-maroon/60 p-4 transition-all duration-300 hover:border-gold hover:shadow-[0_10px_40px_rgba(212,175,55,0.25)] flex flex-col justify-between">
+                  {/* Singer poster image */}
+                  <div className="relative aspect-square overflow-hidden rounded-xl border border-gold/30">
+                    <img
+                      src={s.image}
+                      alt={`${s.name} official poster`}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute top-3 left-3 bg-ink/80 backdrop-blur-md border border-gold/40 text-gold-bright text-[11px] font-bold px-3 py-1 rounded-full uppercase">
+                      {s.day} · {s.date.split(" ")[0]} OCT
+                    </div>
+                    <div className="absolute top-3 right-3 bg-crimson/90 border border-gold/30 text-cream text-[10px] font-bold px-2.5 py-1 rounded-full">
+                      {s.badge}
+                    </div>
+                  </div>
+
+                  {/* Singer info */}
+                  <div className="mt-5 text-center flex-1 flex flex-col justify-between">
+                    <div>
+                      <p className="text-xs font-semibold text-gold-bright tracking-wider">
+                        {s.date} ({s.weekday})
+                      </p>
+                      <h3 className="font-serif text-2xl font-bold text-cream mt-1 group-hover:text-gold transition">
+                        {s.name}
+                      </h3>
+                      <p className="font-deva text-base text-cream/80 mt-1" lang="gu">
+                        {s.gujaratiName}
+                      </p>
+                      <div className="mt-3 inline-block bg-gold/10 border border-gold/30 px-3 py-1 rounded-full text-xs font-bold text-gold">
+                        Pass: {s.price} / Day
+                      </div>
+                    </div>
+
+                    <div className="mt-6 pt-4 border-t border-gold/20">
+                      <Link
+                        to="/book"
+                        className="block w-full bg-gold py-3 text-xs font-bold tracking-widest text-ink uppercase hover:brightness-110 transition shadow"
+                      >
+                        BOOK FOR {s.date.split(" ")[0]} OCT →
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <Link
+              to="/book"
+              className="inline-block border-2 border-gold px-8 py-4 text-xs font-bold tracking-[0.3em] text-cream hover:bg-gold hover:text-ink transition uppercase shadow-[0_10px_30px_rgba(212,175,55,0.2)]"
+            >
+              BOOK 3-DAY SEASON PASS (₹1200) →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ ABOUT SECTION ═══ */}
       <section id="about" className="bg-paper relative py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 md:grid-cols-2">
           <Reveal className="relative">
@@ -1092,15 +726,15 @@ Maa Ni Mandvi | Khedbrahma`;
             </p>
 
             <h2 className="mt-4 font-serif text-4xl font-semibold leading-tight md:text-5xl text-charcoal">
-              Where Khedbrahma
+              Post Navratri 2026
               <br />
-              Comes Together.
+              Khedbrahma Mahotsav
             </h2>
 
             <div className="my-8 h-px w-24 bg-gold-burnished" />
 
             <p className="max-w-md text-lg leading-relaxed text-charcoal/85">
-              Maa Ni Mandvi 2026 brings nine magical nights of authentic Garba to Khedbrahma. Experience ancient rhythms blended with modern heart under the sacred blessings of Maa Ambe.
+              Maa Ni Mandvi brings 3 spectacular nights of Post Navratri Garba to Khedbrahma on 23, 24, and 25 October 2026. Join thousands of Garba lovers and dance to the divine tunes of Khushbu Asodiya, Kajal Maheriya, and Neha Suthar!
             </p>
 
             <div className="mt-8 flex items-center gap-6">
@@ -1114,7 +748,7 @@ Maa Ni Mandvi | Khedbrahma`;
                   <p className="font-deva text-sm font-bold text-festival" lang="gu">
                     માંની માંડવી
                   </p>
-                  <p className="text-[11px] text-charcoal/70">Khedbrahma 2026</p>
+                  <p className="text-[11px] text-charcoal/70">23 - 25 Oct 2026</p>
                 </div>
               </div>
               <div className="h-8 w-px bg-gold/30" />
@@ -1134,198 +768,99 @@ Maa Ni Mandvi | Khedbrahma`;
         </div>
       </section>
 
-      {/* ═══ HOW TO BOOK ═══ */}
-      <section className="bg-velvet relative overflow-hidden py-28">
-        <Embers count={14} />
-        <div className="relative mx-auto max-w-5xl px-6">
+      {/* ═══ PASSES & PRICING PREVIEW ═══ */}
+      <section id="passes" className="bg-textile py-28 border-t border-gold/30">
+        <div className="mx-auto max-w-5xl px-6">
           <Reveal className="text-center">
-            <Eyebrow>EASY BOOKING</Eyebrow>
-            <h2 className="mt-6 font-serif text-5xl font-semibold leading-tight md:text-6xl">
-              How to <span className="text-gold">Book Your Pass</span>
+            <Eyebrow>PASSES & TICKETS</Eyebrow>
+            <h2 className="mt-4 font-serif text-4xl md:text-6xl font-semibold text-cream">
+              Choose Your <span className="text-gold">Pass Package</span>
             </h2>
-            <p className="mt-4 text-cream/70 max-w-2xl mx-auto">
-              A smooth WhatsApp-based booking flow. No online payment required — the organiser will confirm ticket availability and booking steps.
+            <p className="mt-3 text-cream/70 text-sm max-w-lg mx-auto">
+              Direct booking through our online pass portal with WhatsApp confirmation.
             </p>
           </Reveal>
 
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                step: "01",
-                title: "Select Garba Nights",
-                desc: "Choose from 9 nights and set ticket quantities with simple plus and minus controls.",
-              },
-              {
-                step: "02",
-                title: "Enter Attendee Info",
-                desc: "Provide your name, phone number, and accept the event terms and conditions.",
-              },
-              {
-                step: "03",
-                title: "Confirm on WhatsApp",
-                desc: "Review your itemised summary and launch WhatsApp with the prefilled message.",
-              },
-            ].map((item) => (
-              <Reveal key={item.step}>
-                <div className="rounded-xl border border-gold/30 bg-maroon/40 p-6 text-center transition hover:border-gold hover:shadow-[0_10px_30px_rgba(212,175,55,0.15)]">
-                  <p className="font-serif text-5xl font-bold text-gold">{item.step}</p>
-                  <h3 className="mt-4 font-serif text-xl font-semibold text-cream">{item.title}</h3>
-                  <p className="mt-2 text-sm text-cream/70 leading-relaxed">{item.desc}</p>
+          <div className="mt-14 grid gap-8 md:grid-cols-2">
+            {/* Single Day Card */}
+            <Reveal>
+              <div className="rounded-2xl border border-gold/40 bg-maroon/50 p-8 flex flex-col justify-between h-full">
+                <div>
+                  <span className="text-xs font-bold tracking-[0.3em] text-gold uppercase block mb-1">
+                    INDIVIDUAL NIGHTS
+                  </span>
+                  <h3 className="font-serif text-3xl font-bold text-cream">Single Day Pass</h3>
+                  <p className="mt-2 text-sm text-cream/70">
+                    Pick any 1 night from 23, 24, or 25 October. Valid for 1 person for that specific night.
+                  </p>
+                  <div className="mt-6 flex items-baseline gap-2">
+                    <span className="font-serif text-4xl font-extrabold text-gold-bright">₹500</span>
+                    <span className="text-xs text-muted-foreground">/ person / night</span>
+                  </div>
+                  <ul className="mt-6 space-y-2 text-xs text-cream/80">
+                    <li>✓ Entry to selected night</li>
+                    <li>✓ Access to live concert & Garba ground</li>
+                    <li>✓ Instant WhatsApp reservation</li>
+                  </ul>
                 </div>
-              </Reveal>
-            ))}
-          </div>
+                <div className="mt-8">
+                  <Link
+                    to="/book"
+                    className="block w-full border border-gold py-4 text-center text-xs font-bold tracking-[0.2em] text-gold hover:bg-gold hover:text-ink transition uppercase"
+                  >
+                    SELECT SINGLE DAY →
+                  </Link>
+                </div>
+              </div>
+            </Reveal>
 
-          <div className="mt-12 text-center">
-            <GoldButton href="#booking">START BOOKING →</GoldButton>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ 9-DAY BOOKING SECTION ═══ */}
-      <section id="booking" ref={bookingRef} className="bg-textile py-28 border-t border-gold/30">
-        <div className="mx-auto max-w-5xl px-6">
-          {/* Progress Indicator */}
-          <div className="mb-12 flex items-center justify-center gap-2">
-            {(["select", "details", "review"] as BookingStep[]).map((step, i) => {
-              const labels = ["Select Passes", "Your Details", "Review"];
-              const isActive = step === bookingStep;
-              const stepIndex = (["select", "details", "review"] as BookingStep[]).indexOf(bookingStep);
-              const isDone = i < stepIndex;
-              return (
-                <div key={step} className="flex items-center gap-2">
-                  {i > 0 && (
-                    <div className={`h-px w-8 md:w-16 ${isDone ? "bg-gold" : "bg-gold/30"}`} />
-                  )}
-                  <div className="flex items-center gap-2">
-                    <div
-                      className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition ${
-                        isActive
-                          ? "bg-gold text-ink"
-                          : isDone
-                            ? "bg-gold/30 text-gold border border-gold"
-                            : "border border-gold/40 text-cream/50"
-                      }`}
-                    >
-                      {isDone ? "✓" : i + 1}
-                    </div>
-                    <span
-                      className={`hidden text-xs font-semibold tracking-wider md:inline ${
-                        isActive ? "text-gold" : "text-cream/50"
-                      }`}
-                    >
-                      {labels[i]}
+            {/* 3-Day Combo Card */}
+            <Reveal>
+              <div className="rounded-2xl border-2 border-gold bg-gradient-to-b from-maroon/90 to-crimson/80 p-8 flex flex-col justify-between h-full shadow-[0_0_35px_rgba(212,175,55,0.25)] relative overflow-hidden">
+                <div className="absolute top-4 right-4 bg-gold text-ink text-[10px] font-black px-3 py-1 rounded-full uppercase shadow">
+                  ★ BEST VALUE
+                </div>
+                <div>
+                  <span className="text-xs font-bold tracking-[0.3em] text-gold-bright uppercase block mb-1">
+                    ALL 3 NIGHTS INCLUDED
+                  </span>
+                  <h3 className="font-serif text-3xl font-bold text-cream">Full 3-Day Season Pass</h3>
+                  <p className="mt-2 text-sm text-cream/80">
+                    Access to all 3 nights (23, 24 & 25 Oct) featuring Khushbu Asodiya, Kajal Maheriya, and Neha Suthar!
+                  </p>
+                  <div className="mt-6 flex items-baseline gap-3">
+                    <span className="font-serif text-4xl font-extrabold text-gold-bright">₹1,200</span>
+                    <span className="text-sm text-cream/50 line-through">₹1,500</span>
+                    <span className="text-xs font-bold text-[#4ade80] bg-[#4ade80]/10 px-2 py-0.5 rounded">
+                      SAVE ₹300
                     </span>
                   </div>
+                  <ul className="mt-6 space-y-2 text-xs text-cream/90">
+                    <li>✓ Valid for all 3 nights (23, 24, 25 Oct)</li>
+                    <li>✓ Access to all 3 Celebrity Singer concerts</li>
+                    <li>✓ Guaranteed priority entry</li>
+                  </ul>
                 </div>
-              );
-            })}
-          </div>
-
-          {/* Step views */}
-          {bookingStep === "select" && (
-            <TicketSelector
-              booking={booking}
-              setBooking={setBooking}
-              onContinue={() => handleStepChange("details")}
-            />
-          )}
-          {bookingStep === "details" && (
-            <AttendeeForm
-              booking={booking}
-              setBooking={setBooking}
-              onContinue={() => handleStepChange("review")}
-              onBack={() => handleStepChange("select")}
-            />
-          )}
-          {bookingStep === "review" && (
-            <BookingReview
-              booking={booking}
-              onBack={() => handleStepChange("details")}
-              onWhatsApp={handleWhatsApp}
-            />
-          )}
-        </div>
-      </section>
-
-      {/* ═══ EXPERIENCE / ENERGY ═══ */}
-      <section className="relative overflow-hidden bg-ink">
-        <img
-          src={garbaCircle}
-          alt=""
-          aria-hidden
-          width={1600}
-          height={1008}
-          loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover opacity-40"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink via-transparent to-ink" />
-        <div className="relative mx-auto max-w-7xl px-6 py-32">
-          <Reveal>
-            <p className="text-xs font-semibold tracking-[0.5em] text-gold">FEEL THE GARBA</p>
-            <h2 className="mt-6 font-serif text-5xl font-semibold md:text-7xl">
-              Not just a Garba night.
-            </h2>
-          </Reveal>
-          <div className="mt-16 flex flex-wrap gap-x-10 gap-y-4">
-            {["RAAS", "RHYTHM", "LIGHTS", "DEVOTION", "TRADITION", "COMMUNITY"].map((w, i) => (
-              <Reveal key={w}>
-                <span
-                  className={`font-serif text-5xl font-semibold md:text-8xl ${
-                    i % 2 ? "text-cream/30" : "text-gold"
-                  }`}
-                >
-                  {w}
-                </span>
-              </Reveal>
-            ))}
+                <div className="mt-8">
+                  <Link
+                    to="/book"
+                    className="block w-full bg-gold py-4 text-center text-xs font-bold tracking-[0.2em] text-ink hover:brightness-110 transition uppercase shadow"
+                  >
+                    BOOK 3-DAY COMBO PASS →
+                  </Link>
+                </div>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* ═══ GALLERY SECTION (Distinct, diverse imagery — no duplicate flyers!) ═══ */}
-      <section className="bg-velvet py-28">
-        <div className="mx-auto max-w-7xl px-6">
-          <Reveal className="text-center">
-            <Eyebrow>MOMENTS & CELEBRATION</Eyebrow>
-            <h2 className="mt-6 font-serif text-5xl font-semibold">Moments of the Raas</h2>
-          </Reveal>
-          <div className="mt-14 columns-2 gap-4 md:columns-3 [&>*]:mb-4">
-            {[
-              [garbaArenaImg, "THE MAHA RAAS ARENA"],
-              [venueGateImg, "KHEDBRAHMA GRAND ENTRANCE"],
-              [dancer, "THE NIGHT WE DANCED"],
-              [garbaCircle, "GARBA CIRCLE AT NIGHT"],
-              [heroPoster, "MAA AMBE DIVINE DARSHAN"],
-              [diyas, "THE SACRED AARTI"],
-            ].map(([src, cap]) => (
-              <figure key={cap} className="group relative break-inside-avoid overflow-hidden rounded-lg">
-                <img
-                  src={src}
-                  alt={cap}
-                  loading="lazy"
-                  className="w-full transition duration-700 group-hover:scale-105"
-                />
-                <figcaption className="absolute inset-0 flex items-end bg-ink/0 p-5 opacity-0 transition duration-500 group-hover:bg-ink/55 group-hover:opacity-100">
-                  <span className="text-gold font-serif text-xl font-semibold">{cap}</span>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-          <div className="mt-12 text-center">
-            <GoldButton href={INSTAGRAM_URL} ghost>
-              FOLLOW @MAA.NI.MANDVI →
-            </GoldButton>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ VENUE SECTION (Featuring the grand Khedbrahma Entrance Gate artwork) ═══ */}
+      {/* ═══ VENUE SECTION ═══ */}
       <section id="venue" className="bg-paper relative py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 md:grid-cols-2">
           <Reveal>
             <div className="inline-block rounded-full bg-crimson/10 border border-crimson/30 px-3.5 py-1 text-xs font-bold tracking-widest text-crimson mb-3">
-              📍 KHEDBRAHMA
+              📍 OFFICIAL VENUE LOCATION
             </div>
             <p className="font-deva text-3xl text-festival" lang="gu">
               ગરબાની રાત, હવે નવા સરનામે...!
@@ -1337,24 +872,41 @@ Maa Ni Mandvi | Khedbrahma`;
             <p className="text-sm font-bold tracking-[0.3em] text-charcoal">
               {VENUE_NAME.toUpperCase()}
             </p>
-            <p className="mt-2 text-lg text-charcoal/80">{VENUE_FULL}</p>
-            <p className="mt-4 text-sm text-charcoal/60 italic">
-              Exact address & landmark details will be shared on WhatsApp by the organizers.
-            </p>
-            <p className="mt-6 text-charcoal/80">
-              Information Hotline:{" "}
-              <a href={`tel:+91${PHONE}`} className="font-bold text-festival">
-                {PHONE_DISPLAY}
+            <p className="mt-2 text-lg text-charcoal/85 leading-relaxed">{VENUE_FULL}</p>
+
+            <div className="mt-6 space-y-2 text-sm text-charcoal/80">
+              <p>
+                <strong>WhatsApp Booking:</strong>{" "}
+                <a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="font-bold text-festival">
+                  {WHATSAPP_DISPLAY}
+                </a>
+              </p>
+              <p>
+                <strong>Helpline (Contact Only):</strong>{" "}
+                <a href={`tel:+91${HELPLINE_RAW}`} className="font-bold text-festival">
+                  {HELPLINE_PHONE}
+                </a>
+              </p>
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-4">
+              <a
+                href={GOOGLE_MAPS_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-block bg-festival px-7 py-4 text-xs font-bold tracking-[0.3em] text-cream transition hover:bg-crimson shadow"
+              >
+                OPEN IN GOOGLE MAPS 📍
               </a>
-            </p>
-            <a
-              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi, please provide venue location and directions for Maa Ni Mandvi in Khedbrahma.")}`}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-10 inline-block bg-crimson px-7 py-4 text-xs font-bold tracking-[0.3em] text-cream transition hover:bg-festival"
-            >
-              ASK DIRECTIONS ON WHATSAPP →
-            </a>
+              <a
+                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi, please send location directions for Maa Ni Mandvi venue in Khedbrahma.")}`}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-block border border-festival px-7 py-4 text-xs font-bold tracking-[0.3em] text-festival transition hover:bg-festival hover:text-cream"
+              >
+                ASK ON WHATSAPP
+              </a>
+            </div>
           </Reveal>
 
           <Reveal className="relative">
@@ -1405,31 +957,39 @@ Maa Ni Mandvi | Khedbrahma`;
             માંની માંડવી
           </h3>
           <p className="font-deva text-base text-gold-bright mt-1" lang="gu">
-            નવરાત્રિ ૨૦૨૬ · ખેડબ્રહ્મા
+            પોસ્ટ નવરાત્રિ મહોત્સવ ૨૦૨૬ · ખેડબ્રહ્મા
           </p>
-          <p className="mt-2 font-serif text-lg italic text-cream/80">
-            ગરબાની રાત, હવે નવા સરનામે...!
-          </p>
-          <p className="mt-1 text-xs font-semibold tracking-[0.5em] text-gold uppercase">
-            Ancient Rhythms, Modern Heart ✨️
+          <p className="mt-1 text-xs font-semibold tracking-[0.4em] text-cream">
+            23 OCT · 24 OCT · 25 OCT 2026
           </p>
 
           <div className="mt-10 flex flex-wrap justify-center gap-3">
-            <GoldButton href="#booking">GET YOUR PASS →</GoldButton>
+            <Link
+              to="/book"
+              className="bg-gold px-7 py-3 text-xs font-bold tracking-[0.25em] text-ink hover:brightness-110 transition shadow uppercase"
+            >
+              BOOK PASSES
+            </Link>
             <GoldButton
-              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi, I'm interested in Maa Ni Mandvi Garba passes.")}`}
+              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi, I want to book passes for Maa Ni Mandvi Post Navratri (23-25 Oct 2026).")}`}
               ghost
             >
               WHATSAPP
+            </GoldButton>
+            <GoldButton href={GOOGLE_MAPS_URL} ghost>
+              LOCATION MAPS
             </GoldButton>
             <GoldButton href={INSTAGRAM_URL} ghost>
               @MAA.NI.MANDVI
             </GoldButton>
           </div>
 
-          <p className="mt-12 text-xs text-muted-foreground">
-            {VENUE_FULL} · {PHONE_DISPLAY}
-          </p>
+          <div className="mt-10 text-xs text-muted-foreground space-y-1">
+            <p>{VENUE_FULL}</p>
+            <p>
+              WhatsApp Booking: {WHATSAPP_DISPLAY} · Helpline: {HELPLINE_PHONE}
+            </p>
+          </div>
 
           <div className="mt-10 border-t border-gold/20 pt-6 text-xs text-cream/80 flex flex-col items-center gap-2">
             <p className="tracking-widest uppercase font-medium">
