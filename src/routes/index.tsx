@@ -11,6 +11,11 @@ import diyas from "@/assets/diyas.jpg";
 import khushbuImg from "@/assets/artists/khushbu-asodiya.jpg";
 import kajalImg from "@/assets/artists/kajal-maheriya.jpg";
 import nehaImg from "@/assets/artists/neha-suthar.jpg";
+import galleryUmbrellas from "@/assets/gallery/gallery-umbrellas.jpg";
+import galleryDiyas from "@/assets/gallery/gallery-diyas.jpg";
+import galleryNightGround from "@/assets/gallery/gallery-night-ground.jpg";
+import galleryDandiyaCheers from "@/assets/gallery/gallery-dandiya-cheers.jpg";
+import galleryCanopyDecor from "@/assets/gallery/gallery-canopy-decor.jpg";
 import { BackgroundMusic } from "@/components/BackgroundMusic";
 
 export const Route = createFileRoute("/")({
@@ -20,7 +25,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "3 Nights of Grand Post Navratri Garba at Khedbrahma. 23, 24, 25 October 2026. Featuring Khushbu Asodiya, Kajal Maheriya, Neha Suthar. Single day ₹500, 3-Day pass ₹1200.",
+          "3 Nights of Grand Post Navratri Garba at Khedbrahma. 23, 24, 25 October 2026. Featuring Khushbu Asodiya (23 Oct), Neha Suthar (24 Oct), Kajal Maheriya (25 Oct). Single day ₹500, 3-Day pass ₹1200.",
       },
       { property: "og:title", content: "Maa Ni Mandvi 2026 — Post Navratri Mahotsav" },
       {
@@ -58,8 +63,9 @@ const END = new Date("2026-10-26T02:00:00+05:30").getTime();
 
 const NAV = [
   ["Home", "#home"],
-  ["About", "#about"],
   ["Singers", "#singers"],
+  ["Gallery", "#gallery"],
+  ["About", "#about"],
   ["Passes", "#passes"],
   ["Venue", "#venue"],
   ["FAQ", "#faq"],
@@ -83,9 +89,9 @@ const SINGERS = [
     day: "DAY 2",
     date: "24 OCT 2026",
     weekday: "Saturday",
-    name: "Kajal Maheriya",
-    gujaratiName: "કાજલ મહેરિયા",
-    image: kajalImg,
+    name: "Neha Suthar",
+    gujaratiName: "નેહા સુથાર",
+    image: nehaImg,
     badge: "WEEKEND SPECIAL",
     price: "₹500",
   },
@@ -93,9 +99,9 @@ const SINGERS = [
     day: "DAY 3",
     date: "25 OCT 2026",
     weekday: "Sunday",
-    name: "Neha Suthar",
-    gujaratiName: "નેહા સુથાર",
-    image: nehaImg,
+    name: "Kajal Maheriya",
+    gujaratiName: "કાજલ મહેરિયા",
+    image: kajalImg,
     badge: "GRAND FINALE",
     price: "₹500",
   },
@@ -108,7 +114,7 @@ const FAQ_DATA = [
   ],
   [
     "Who are the performing artists?",
-    "23 Oct: Khushbu Asodiya | 24 Oct: Kajal Maheriya | 25 Oct: Neha Suthar.",
+    "23 Oct: Khushbu Asodiya | 24 Oct: Neha Suthar | 25 Oct: Kajal Maheriya.",
   ],
   [
     "What are the ticket prices?",
@@ -520,6 +526,374 @@ function Nav() {
 }
 
 /* ═══════════════════════════════════════════════
+   FESTIVAL PHOTO GALLERY & LIGHTBOX
+   ═══════════════════════════════════════════════ */
+const GALLERY_ITEMS = [
+  {
+    id: "night-ground",
+    image: galleryNightGround,
+    title: "Garba Raas Celebration",
+    gujaratiTitle: "ઉત્સાહી ગરબા રાસ",
+    category: "GARBA ARENA",
+    description:
+      "Thousands of energetic Garba players moving in divine harmony under the colorful festival canopy at Khedbrahma.",
+  },
+  {
+    id: "canopy-decor",
+    image: galleryCanopyDecor,
+    title: "Illuminated Mandap Canopy",
+    gujaratiTitle: "રોયલ મંડપ અને લાઇટિંગ",
+    category: "ROYAL DECOR",
+    description:
+      "Spectacular suspended fabric ceiling adorned with handcrafted Gujarati umbrellas and glittering fairy lights.",
+  },
+  {
+    id: "dandiya-cheers",
+    image: galleryDandiyaCheers,
+    title: "Dandiya Sticks Raas",
+    gujaratiTitle: "રંગબેરંગી દાંડિયા રાસ",
+    category: "RAAS DANDIYA",
+    description:
+      "Garba lovers crossing decorated wooden dandiya sticks in joyful rhythm with traditional folk melodies.",
+  },
+  {
+    id: "diyas",
+    image: galleryDiyas,
+    title: "Maa Aarti & Diya Rangoli",
+    gujaratiTitle: "મંગલ આરતી અને દીપોત્સવ",
+    category: "DIVINE AARTI",
+    subtitle: "Sacred Flower & Lamp Decor",
+    description:
+      "Sacred brass lamps and glowing diyas nestled in vibrant fresh marigold and rose petal rangoli.",
+  },
+  {
+    id: "umbrellas",
+    image: galleryUmbrellas,
+    title: "Kutchi Embroidered Umbrellas",
+    gujaratiTitle: "કચ્છી છત્રી શણગાર",
+    category: "HERITAGE CRAFT",
+    subtitle: "Handcrafted Folk Mirrors",
+    description:
+      "Handcrafted folk umbrellas featuring exquisite Kutchi embroidery, mirror work, and colourful tassels.",
+  },
+];
+
+function GallerySection() {
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (activeIdx === null) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveIdx(null);
+      if (e.key === "ArrowLeft") {
+        setActiveIdx((prev) => (prev !== null ? (prev - 1 + GALLERY_ITEMS.length) % GALLERY_ITEMS.length : null));
+      }
+      if (e.key === "ArrowRight") {
+        setActiveIdx((prev) => (prev !== null ? (prev + 1) % GALLERY_ITEMS.length : null));
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [activeIdx]);
+
+  return (
+    <section id="gallery" className="bg-velvet relative py-28 border-t border-gold/30 overflow-hidden">
+      <Embers count={12} />
+      <div className="relative mx-auto max-w-7xl px-6">
+        <Reveal className="text-center">
+          <Eyebrow>FESTIVE GLIMPSES · ઉત્સવની ઝાંખી</Eyebrow>
+          <h2 className="mt-4 font-serif text-4xl md:text-6xl font-semibold text-cream">
+            The Spirit of <span className="text-gold">Maa Ni Mandvi</span>
+          </h2>
+          <p className="mt-3 text-cream/75 text-sm md:text-base max-w-2xl mx-auto">
+            Experience the royal decor, sacred aarti, traditional dandiya, and vibrant memories from our grand celebrations.
+          </p>
+        </Reveal>
+
+        {/* Gallery Bento Grid */}
+        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-5 md:gap-6">
+          {/* Item 1: Arena Garba Night (Large Showcase - 7 cols on desktop) */}
+          <Reveal className="sm:col-span-2 lg:col-span-7 flex">
+            <div
+              onClick={() => setActiveIdx(0)}
+              className="group relative w-full overflow-hidden rounded-2xl border border-gold/40 bg-maroon/60 shadow-xl cursor-pointer transition-all duration-300 hover:border-gold hover:shadow-[0_12px_45px_rgba(212,175,55,0.3)] min-h-[360px] sm:min-h-[440px] flex flex-col justify-end"
+            >
+              <img
+                src={GALLERY_ITEMS[0].image}
+                alt={GALLERY_ITEMS[0].title}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/40 to-transparent" />
+
+              <div className="absolute top-4 left-4">
+                <span className="rounded-full border border-gold/50 bg-ink/85 backdrop-blur-md px-3.5 py-1 text-[10px] font-bold tracking-widest text-gold-bright uppercase shadow">
+                  ★ {GALLERY_ITEMS[0].category}
+                </span>
+              </div>
+
+              <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span className="h-9 w-9 rounded-full bg-gold text-ink flex items-center justify-center font-bold text-sm shadow">
+                  🔍
+                </span>
+              </div>
+
+              <div className="relative p-6 md:p-8">
+                <p className="font-deva text-xl text-gold-bright" lang="gu">
+                  {GALLERY_ITEMS[0].gujaratiTitle}
+                </p>
+                <h3 className="font-serif text-2xl md:text-3xl font-bold text-cream mt-1 group-hover:text-gold transition">
+                  {GALLERY_ITEMS[0].title}
+                </h3>
+                <p className="mt-2 text-xs md:text-sm text-cream/80 max-w-lg">
+                  {GALLERY_ITEMS[0].description}
+                </p>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold tracking-wider text-gold group-hover:translate-x-1 transition-transform">
+                  VIEW FULL PHOTO ↗
+                </span>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Item 2: Canopy Decor (5 cols on desktop) */}
+          <Reveal className="sm:col-span-2 lg:col-span-5 flex">
+            <div
+              onClick={() => setActiveIdx(1)}
+              className="group relative w-full overflow-hidden rounded-2xl border border-gold/40 bg-maroon/60 shadow-xl cursor-pointer transition-all duration-300 hover:border-gold hover:shadow-[0_12px_45px_rgba(212,175,55,0.3)] min-h-[360px] sm:min-h-[440px] flex flex-col justify-end"
+            >
+              <img
+                src={GALLERY_ITEMS[1].image}
+                alt={GALLERY_ITEMS[1].title}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/40 to-transparent" />
+
+              <div className="absolute top-4 left-4">
+                <span className="rounded-full border border-gold/50 bg-ink/85 backdrop-blur-md px-3.5 py-1 text-[10px] font-bold tracking-widest text-gold-bright uppercase shadow">
+                  {GALLERY_ITEMS[1].category}
+                </span>
+              </div>
+
+              <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span className="h-9 w-9 rounded-full bg-gold text-ink flex items-center justify-center font-bold text-sm shadow">
+                  🔍
+                </span>
+              </div>
+
+              <div className="relative p-6">
+                <p className="font-deva text-lg text-gold-bright" lang="gu">
+                  {GALLERY_ITEMS[1].gujaratiTitle}
+                </p>
+                <h3 className="font-serif text-xl md:text-2xl font-bold text-cream mt-1 group-hover:text-gold transition">
+                  {GALLERY_ITEMS[1].title}
+                </h3>
+                <p className="mt-2 text-xs text-cream/80">
+                  {GALLERY_ITEMS[1].description}
+                </p>
+                <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold tracking-wider text-gold group-hover:translate-x-1 transition-transform">
+                  VIEW FULL PHOTO ↗
+                </span>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Item 3: Dandiya Cheers (4 cols on desktop) */}
+          <Reveal className="lg:col-span-4 flex">
+            <div
+              onClick={() => setActiveIdx(2)}
+              className="group relative w-full overflow-hidden rounded-2xl border border-gold/40 bg-maroon/60 shadow-xl cursor-pointer transition-all duration-300 hover:border-gold hover:shadow-[0_12px_45px_rgba(212,175,55,0.3)] min-h-[300px] sm:min-h-[360px] flex flex-col justify-end"
+            >
+              <img
+                src={GALLERY_ITEMS[2].image}
+                alt={GALLERY_ITEMS[2].title}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/40 to-transparent" />
+
+              <div className="absolute top-4 left-4">
+                <span className="rounded-full border border-gold/50 bg-ink/85 backdrop-blur-md px-3 py-1 text-[10px] font-bold tracking-widest text-gold-bright uppercase shadow">
+                  {GALLERY_ITEMS[2].category}
+                </span>
+              </div>
+
+              <div className="relative p-5">
+                <p className="font-deva text-base text-gold-bright" lang="gu">
+                  {GALLERY_ITEMS[2].gujaratiTitle}
+                </p>
+                <h3 className="font-serif text-lg md:text-xl font-bold text-cream mt-0.5 group-hover:text-gold transition">
+                  {GALLERY_ITEMS[2].title}
+                </h3>
+                <span className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-gold">
+                  EXPAND ↗
+                </span>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Item 4: Diyas & Aarti (4 cols on desktop) */}
+          <Reveal className="lg:col-span-4 flex">
+            <div
+              onClick={() => setActiveIdx(3)}
+              className="group relative w-full overflow-hidden rounded-2xl border border-gold/40 bg-maroon/60 shadow-xl cursor-pointer transition-all duration-300 hover:border-gold hover:shadow-[0_12px_45px_rgba(212,175,55,0.3)] min-h-[300px] sm:min-h-[360px] flex flex-col justify-end"
+            >
+              <img
+                src={GALLERY_ITEMS[3].image}
+                alt={GALLERY_ITEMS[3].title}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/40 to-transparent" />
+
+              <div className="absolute top-4 left-4">
+                <span className="rounded-full border border-gold/50 bg-ink/85 backdrop-blur-md px-3 py-1 text-[10px] font-bold tracking-widest text-gold-bright uppercase shadow">
+                  {GALLERY_ITEMS[3].category}
+                </span>
+              </div>
+
+              <div className="relative p-5">
+                <p className="font-deva text-base text-gold-bright" lang="gu">
+                  {GALLERY_ITEMS[3].gujaratiTitle}
+                </p>
+                <h3 className="font-serif text-lg md:text-xl font-bold text-cream mt-0.5 group-hover:text-gold transition">
+                  {GALLERY_ITEMS[3].title}
+                </h3>
+                <span className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-gold">
+                  EXPAND ↗
+                </span>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Item 5: Kutchi Umbrellas (4 cols on desktop) */}
+          <Reveal className="lg:col-span-4 flex">
+            <div
+              onClick={() => setActiveIdx(4)}
+              className="group relative w-full overflow-hidden rounded-2xl border border-gold/40 bg-maroon/60 shadow-xl cursor-pointer transition-all duration-300 hover:border-gold hover:shadow-[0_12px_45px_rgba(212,175,55,0.3)] min-h-[300px] sm:min-h-[360px] flex flex-col justify-end"
+            >
+              <img
+                src={GALLERY_ITEMS[4].image}
+                alt={GALLERY_ITEMS[4].title}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/40 to-transparent" />
+
+              <div className="absolute top-4 left-4">
+                <span className="rounded-full border border-gold/50 bg-ink/85 backdrop-blur-md px-3 py-1 text-[10px] font-bold tracking-widest text-gold-bright uppercase shadow">
+                  {GALLERY_ITEMS[4].category}
+                </span>
+              </div>
+
+              <div className="relative p-5">
+                <p className="font-deva text-base text-gold-bright" lang="gu">
+                  {GALLERY_ITEMS[4].gujaratiTitle}
+                </p>
+                <h3 className="font-serif text-lg md:text-xl font-bold text-cream mt-0.5 group-hover:text-gold transition">
+                  {GALLERY_ITEMS[4].title}
+                </h3>
+                <span className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-gold">
+                  EXPAND ↗
+                </span>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+
+        {/* Action Button */}
+        <div className="mt-14 text-center">
+          <Link
+            to="/book"
+            className="inline-block bg-gold px-8 py-4 text-xs font-bold tracking-[0.3em] text-ink hover:brightness-110 transition uppercase shadow-[0_10px_35px_rgba(212,175,55,0.3)]"
+          >
+            EXPERIENCE IT LIVE · BOOK PASSES →
+          </Link>
+        </div>
+
+        {/* Interactive Lightbox Modal */}
+        {activeIdx !== null && (
+          <div
+            role="dialog"
+            aria-modal="true"
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-ink/95 backdrop-blur-md p-4 sm:p-6"
+            onClick={() => setActiveIdx(null)}
+          >
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={() => setActiveIdx(null)}
+              aria-label="Close photo preview"
+              className="absolute top-5 right-5 z-20 h-11 w-11 rounded-full border border-gold/60 bg-maroon/90 text-gold-bright hover:bg-gold hover:text-ink text-2xl flex items-center justify-center transition cursor-pointer shadow-lg"
+            >
+              ✕
+            </button>
+
+            {/* Prev Button */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveIdx((prev) => (prev !== null ? (prev - 1 + GALLERY_ITEMS.length) % GALLERY_ITEMS.length : null));
+              }}
+              aria-label="Previous photo"
+              className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full border border-gold/60 bg-maroon/90 text-gold hover:bg-gold hover:text-ink text-2xl flex items-center justify-center transition cursor-pointer shadow-lg"
+            >
+              ‹
+            </button>
+
+            {/* Next Button */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveIdx((prev) => (prev !== null ? (prev + 1) % GALLERY_ITEMS.length : null));
+              }}
+              aria-label="Next photo"
+              className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full border border-gold/60 bg-maroon/90 text-gold hover:bg-gold hover:text-ink text-2xl flex items-center justify-center transition cursor-pointer shadow-lg"
+            >
+              ›
+            </button>
+
+            {/* Modal Content */}
+            <div
+              className="relative max-w-4xl w-full max-h-[92vh] flex flex-col items-center overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative rounded-2xl overflow-hidden border-2 border-gold/70 shadow-[0_0_60px_rgba(212,175,55,0.4)] bg-ink max-h-[66vh] flex items-center justify-center">
+                <img
+                  src={GALLERY_ITEMS[activeIdx].image}
+                  alt={GALLERY_ITEMS[activeIdx].title}
+                  className="max-h-[66vh] w-auto max-w-full object-contain"
+                />
+              </div>
+
+              {/* Caption Box */}
+              <div className="mt-4 w-full rounded-xl border border-gold/40 bg-maroon/95 p-5 text-center shadow-xl backdrop-blur-md">
+                <div className="flex items-center justify-center gap-2 text-[11px] font-bold tracking-widest text-gold-bright uppercase">
+                  <span>{GALLERY_ITEMS[activeIdx].category}</span>
+                  <span>•</span>
+                  <span>PHOTO {activeIdx + 1} OF {GALLERY_ITEMS.length}</span>
+                </div>
+                <h3 className="font-serif text-2xl md:text-3xl font-bold text-cream mt-1">
+                  {GALLERY_ITEMS[activeIdx].title}
+                </h3>
+                <p className="font-deva text-base text-gold mt-0.5" lang="gu">
+                  {GALLERY_ITEMS[activeIdx].gujaratiTitle}
+                </p>
+                <p className="mt-2 text-xs sm:text-sm text-cream/80 max-w-xl mx-auto">
+                  {GALLERY_ITEMS[activeIdx].description}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════
    MAIN PAGE
    ═══════════════════════════════════════════════ */
 function Index() {
@@ -545,69 +919,58 @@ function Index() {
 
         <div className="relative mx-auto w-full max-w-7xl px-6 pb-16 pt-36">
           <div className="grid items-center gap-12 lg:grid-cols-[1.3fr_0.9fr]">
-            {/* Left Column: Branding and Headline */}
+            {/* Left Column: Minimal Elegant Branding & CTAs */}
             <div className={intro ? "opacity-0" : "animate-rise"}>
               <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-ink/80 px-4 py-1.5 backdrop-blur-md mb-6 shadow-md">
                 <span className="h-2 w-2 rounded-full bg-gold animate-pulse" />
                 <span className="text-[11px] font-bold tracking-[0.3em] text-gold-bright uppercase">
-                  POST NAVRATRI · 23 — 25 OCT 2026
+                  POST NAVRATRI · KHEDBRAHMA
                 </span>
               </div>
 
-              <div className="flex flex-col items-start gap-4">
-                <div className="flex items-center gap-4">
-                  <img
-                    src={logoImg}
-                    alt="માંની માંડવી Logo"
-                    className="h-20 w-20 md:h-24 md:w-24 rounded-full border-2 border-gold object-cover shadow-[0_0_30px_rgba(212,175,55,0.4)]"
-                  />
-                  <div>
-                    <h1 className="font-deva text-4xl md:text-6xl text-gold leading-none" lang="gu">
-                      માંની માંડવી
-                    </h1>
-                    <p className="font-deva text-lg md:text-xl text-gold-bright tracking-wider mt-1" lang="gu">
-                      પોસ્ટ નવરાત્રિ મહોત્સવ ૨૦૨૬
-                    </p>
-                  </div>
-                </div>
-
-                <p className="font-deva text-2xl md:text-3xl text-gold-bright tracking-wide mt-2" lang="gu">
-                  ગરબાની રાત, હવે નવા સરનામે...!
-                </p>
-
-                <p className="font-serif text-xl italic text-cream/90 md:text-2xl">
-                  3 Nights · 3 Mega Stars · Khedbrahma ✨️
-                </p>
-              </div>
-
-              {/* Details strip */}
-              <div className="mt-8 border-l border-gold/50 pl-6">
-                <p className="font-serif text-2xl font-semibold text-gold-bright md:text-3xl">
-                  {EVENT_DATES}
-                </p>
-                <p className="mt-2 text-sm font-bold tracking-[0.2em] text-cream">
-                  {VENUE_NAME.toUpperCase()}
-                </p>
-                <p className="mt-1 text-sm text-muted-foreground">{VENUE_FULL}</p>
-                <div className="mt-3 flex flex-wrap items-center gap-4 text-xs">
-                  <span className="text-gold font-bold">Single Day Pass: ₹500</span>
-                  <span className="text-gold-bright font-bold">3-Day Pass: ₹1,200</span>
+              <div className="flex items-center gap-4 mb-3">
+                <img
+                  src={logoImg}
+                  alt="માંની માંડવી"
+                  className="h-16 w-16 md:h-20 md:w-20 rounded-full border-2 border-gold object-cover shadow-[0_0_25px_rgba(212,175,55,0.4)]"
+                />
+                <div>
+                  <h1 className="font-deva text-4xl md:text-6xl text-gold leading-none" lang="gu">
+                    માંની માંડવી
+                  </h1>
+                  <p className="font-deva text-base md:text-lg text-gold-bright tracking-wider mt-1" lang="gu">
+                    પોસ્ટ નવરાત્રિ મહોત્સવ ૨૦૨૬
+                  </p>
                 </div>
               </div>
 
-              {/* CTAs */}
+              <p className="font-serif text-xl md:text-2xl text-cream/90 font-light italic mt-3">
+                23 · 24 · 25 October 2026 · Khedbrahma ✨️
+              </p>
+
+              {/* Minimalist Highlights */}
+              <div className="mt-5 flex flex-wrap items-center gap-2.5">
+                <span className="rounded-full border border-gold/30 bg-maroon/60 px-3.5 py-1 text-xs text-cream/90">
+                  🎤 Khushbu · Neha · Kajal
+                </span>
+                <span className="rounded-full border border-gold/30 bg-maroon/60 px-3.5 py-1 text-xs text-gold-bright font-bold">
+                  🎟️ Passes from ₹500
+                </span>
+              </div>
+
+              {/* Clean CTAs */}
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
                   to="/book"
-                  className="bg-gold inline-flex items-center gap-2 px-7 py-4 text-xs font-bold tracking-[0.3em] text-ink shadow-[0_10px_40px_-10px_var(--gold)] transition hover:brightness-110 uppercase"
+                  className="bg-gold inline-flex items-center gap-2 px-8 py-4 text-xs font-bold tracking-[0.3em] text-ink shadow-[0_10px_35px_-5px_var(--gold)] transition hover:brightness-110 uppercase"
                 >
-                  BOOK YOUR PASS →
+                  BOOK PASSES →
                 </Link>
                 <GoldButton
                   href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi, I want to book passes for Maa Ni Mandvi Post Navratri (23-25 Oct 2026).")}`}
                   ghost
                 >
-                  WHATSAPP BOOKING
+                  WHATSAPP
                 </GoldButton>
               </div>
             </div>
@@ -700,6 +1063,9 @@ function Index() {
         </div>
       </section>
 
+      {/* ═══ PHOTO GALLERY SECTION ═══ */}
+      <GallerySection />
+
       {/* ═══ ABOUT SECTION ═══ */}
       <section id="about" className="bg-paper relative py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 md:grid-cols-2">
@@ -715,54 +1081,31 @@ function Index() {
           </Reveal>
 
           <Reveal>
-            <div className="inline-block rounded-full bg-crimson/10 border border-crimson/30 px-4 py-1 text-xs font-bold tracking-widest text-crimson mb-4">
-              નવું સરનામું · KHEDBRAHMA
+            <div className="inline-block rounded-full bg-crimson/10 border border-crimson/30 px-3.5 py-1 text-xs font-bold tracking-widest text-crimson mb-3">
+              KHEDBRAHMA · ૨૩-૨૫ OCT 2026
             </div>
 
-            <p className="font-deva text-4xl text-festival leading-tight" lang="gu">
-              ગરબાની રાત,
+            <h2 className="mt-2 font-serif text-4xl font-semibold leading-tight md:text-5xl text-charcoal">
+              A Grand Cultural Celebration,
               <br />
-              હવે નવા સરનામે...!
-            </p>
-
-            <h2 className="mt-4 font-serif text-4xl font-semibold leading-tight md:text-5xl text-charcoal">
-              Post Navratri 2026
-              <br />
-              Khedbrahma Mahotsav
+              <span className="text-festival">At A Brand New Venue</span>
             </h2>
 
-            <div className="my-8 h-px w-24 bg-gold-burnished" />
+            <div className="my-6 h-px w-20 bg-gold-burnished" />
 
-            <p className="max-w-md text-lg leading-relaxed text-charcoal/85">
-              Maa Ni Mandvi brings 3 spectacular nights of Post Navratri Garba to Khedbrahma on 23, 24, and 25 October 2026. Join thousands of Garba lovers and dance to the divine tunes of Khushbu Asodiya, Kajal Maheriya, and Neha Suthar!
+            <p className="max-w-md text-base leading-relaxed text-charcoal/80">
+              Maa Ni Mandvi brings 3 magical nights of Post Navratri celebration to Khedbrahma. Experience divine Aarti, royal decor, and high-energy Garba with Gujarat's most beloved vocalists.
             </p>
 
             <div className="mt-8 flex items-center gap-6">
-              <div className="flex items-center gap-3">
-                <img
-                  src={logoImg}
-                  alt="માંની માંડવી"
-                  className="h-12 w-12 rounded-full border border-gold object-cover shadow"
-                />
-                <div>
-                  <p className="font-deva text-sm font-bold text-festival" lang="gu">
-                    માંની માંડવી
-                  </p>
-                  <p className="text-[11px] text-charcoal/70">23 - 25 Oct 2026</p>
-                </div>
-              </div>
-              <div className="h-8 w-px bg-gold/30" />
-              <div>
-                <p className="text-xs font-bold tracking-widest text-charcoal uppercase">Follow On IG</p>
-                <a
-                  href={INSTAGRAM_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-xs font-semibold text-festival hover:underline"
-                >
-                  @maa.ni.mandvi
-                </a>
-              </div>
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 text-xs font-bold tracking-wider text-festival hover:underline uppercase"
+              >
+                Follow @maa.ni.mandvi on Instagram →
+              </a>
             </div>
           </Reveal>
         </div>
@@ -826,7 +1169,7 @@ function Index() {
                   </span>
                   <h3 className="font-serif text-3xl font-bold text-cream">Full 3-Day Season Pass</h3>
                   <p className="mt-2 text-sm text-cream/80">
-                    Access to all 3 nights (23, 24 & 25 Oct) featuring Khushbu Asodiya, Kajal Maheriya, and Neha Suthar!
+                    Access to all 3 nights (23, 24 & 25 Oct) featuring Khushbu Asodiya, Neha Suthar, and Kajal Maheriya!
                   </p>
                   <div className="mt-6 flex items-baseline gap-3">
                     <span className="font-serif text-4xl font-extrabold text-gold-bright">₹1,200</span>

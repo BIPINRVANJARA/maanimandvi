@@ -79,7 +79,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Maa Ni Mandvi Post Navratri 2026 (23, 24, 25 October 2026) at Khedbrahma. Featuring Khushbu Asodiya, Kajal Maheriya, Neha Suthar. Single day ₹500, 3-Day pass ₹1200.",
+          "Maa Ni Mandvi Post Navratri 2026 (23, 24, 25 October 2026) at Khedbrahma. Featuring Khushbu Asodiya, Neha Suthar, Kajal Maheriya. Single day ₹500, 3-Day pass ₹1200.",
       },
       { property: "og:title", content: "Maa Ni Mandvi 2026 — પોસ્ટ નવરાત્રિ મહોત્સવ" },
       {
