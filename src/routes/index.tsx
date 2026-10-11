@@ -1284,7 +1284,7 @@ function Index() {
       </section>
 
       {/* ═══ FOOTER ═══ */}
-      <footer className="bg-textile relative overflow-hidden border-t border-gold/30 py-14 sm:py-20 text-center pb-24 md:pb-20">
+      <footer className="bg-textile relative overflow-hidden border-t border-gold/30 py-14 sm:py-20 text-center pb-36 sm:pb-28 md:pb-20">
         <Embers count={10} />
         <div className="relative mx-auto max-w-4xl px-4 sm:px-6">
           <img
@@ -1351,7 +1351,7 @@ function Index() {
       </footer>
 
       {/* ═══ MOBILE BOTTOM STICKY QUICK BOOKING BAR ═══ */}
-      <div className="fixed bottom-0 inset-x-0 z-40 md:hidden bg-maroon/95 border-t border-gold/40 backdrop-blur-md px-4 py-2.5 shadow-[0_-5px_25px_rgba(0,0,0,0.85)] flex items-center justify-between gap-3">
+      <div className="fixed bottom-0 inset-x-0 z-40 md:hidden bg-maroon/95 border-t border-gold/40 backdrop-blur-md px-4 py-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] shadow-[0_-5px_25px_rgba(0,0,0,0.85)] flex items-center justify-between gap-3">
         <div>
           <span className="text-[9px] font-bold text-gold-bright block uppercase tracking-wider">
             23-25 OCT · KHEDBRAHMA
