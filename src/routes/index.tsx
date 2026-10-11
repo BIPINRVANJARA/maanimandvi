@@ -1003,17 +1003,17 @@ function Index() {
             {SINGERS.map((s, idx) => (
               <Reveal key={s.name} className="flex">
                 <div className="group relative w-full rounded-2xl border-2 border-gold/40 bg-maroon/60 p-3.5 sm:p-4 transition-all duration-300 hover:border-gold hover:shadow-[0_10px_40px_rgba(212,175,55,0.25)] flex flex-col justify-between">
-                  {/* Singer poster image */}
-                  <div className="relative aspect-square overflow-hidden rounded-xl border border-gold/30">
+                  {/* Singer poster image (768x1024 exact 3:4 aspect ratio) */}
+                  <div className="relative aspect-[3/4] overflow-hidden rounded-xl border border-gold/30">
                     <img
                       src={s.image}
                       alt={`${s.name} official poster`}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 bg-ink/80 backdrop-blur-md border border-gold/40 text-gold-bright text-[10px] sm:text-[11px] font-bold px-2.5 py-0.5 sm:py-1 rounded-full uppercase">
+                    <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 bg-ink/85 backdrop-blur-md border border-gold/40 text-gold-bright text-[10px] sm:text-[11px] font-bold px-2.5 py-0.5 sm:py-1 rounded-full uppercase shadow">
                       {s.day} · {s.date.split(" ")[0]} OCT
                     </div>
-                    <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 bg-crimson/90 border border-gold/30 text-cream text-[9px] sm:text-[10px] font-bold px-2 py-0.5 sm:py-1 rounded-full">
+                    <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 bg-crimson/90 backdrop-blur-md border border-gold/30 text-cream text-[9px] sm:text-[10px] font-bold px-2 py-0.5 sm:py-1 rounded-full shadow">
                       {s.badge}
                     </div>
                   </div>
@@ -1196,69 +1196,152 @@ function Index() {
       </section>
 
       {/* ═══ VENUE SECTION ═══ */}
-      <section id="venue" className="bg-paper relative py-14 sm:py-24">
-        <div className="mx-auto grid max-w-7xl items-center gap-8 sm:gap-16 px-4 sm:px-6 md:grid-cols-2">
-          <Reveal>
-            <div className="inline-block rounded-full bg-crimson/10 border border-crimson/30 px-3.5 py-1 text-xs font-bold tracking-widest text-crimson mb-3">
-              📍 OFFICIAL VENUE LOCATION
-            </div>
-            <p className="font-deva text-2xl sm:text-3xl text-festival" lang="gu">
-              ગરબાની રાત, હવે નવા સરનામે...!
-            </p>
-            <h2 className="mt-2 sm:mt-4 font-serif text-3xl sm:text-5xl md:text-6xl font-semibold leading-tight text-charcoal">
-              Find Your Way to the Mandvi
-            </h2>
-            <div className="my-5 sm:my-8 h-px w-20 sm:w-24 bg-gold-burnished" />
-            <p className="text-xs sm:text-sm font-bold tracking-[0.25em] text-charcoal uppercase">
-              {VENUE_NAME}
-            </p>
-            <p className="mt-1 sm:mt-2 text-sm sm:text-lg text-charcoal/85 leading-relaxed">{VENUE_FULL}</p>
-
-            <div className="mt-5 sm:mt-6 space-y-1.5 text-xs sm:text-sm text-charcoal/80">
-              <p>
-                <strong>WhatsApp Booking:</strong>{" "}
-                <a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="font-bold text-festival">
-                  {WHATSAPP_DISPLAY}
-                </a>
+      <section id="venue" className="bg-paper relative py-16 sm:py-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="grid items-center gap-10 sm:gap-16 md:grid-cols-2">
+            <Reveal>
+              <p className="font-deva text-2xl sm:text-3xl text-festival" lang="gu">
+                ગરબાની રાત, હવે નવા સરનામે...!
               </p>
-              <p>
-                <strong>Helpline (Contact Only):</strong>{" "}
-                <a href={`tel:+91${HELPLINE_RAW}`} className="font-bold text-festival">
+              <h2 className="mt-3 font-serif text-4xl sm:text-5xl md:text-6xl font-semibold leading-tight text-charcoal">
+                Find Your Way to the Mandvo
+              </h2>
+              <div className="my-6 sm:my-8 h-px w-24 bg-gold-burnished" />
+              <p className="text-xs sm:text-sm font-bold tracking-[0.3em] text-charcoal uppercase">
+                {VENUE_NAME.toUpperCase()}
+              </p>
+              <p className="mt-2 text-sm sm:text-lg text-charcoal/80 leading-relaxed">
+                {VENUE_FULL}
+              </p>
+              <p className="mt-6 text-sm sm:text-base text-charcoal/80">
+                More information:{" "}
+                <a
+                  href={`tel:+91${HELPLINE_RAW}`}
+                  className="font-bold text-crimson hover:underline"
+                >
                   {HELPLINE_PHONE}
                 </a>
               </p>
-            </div>
+              <p className="mt-1 text-xs sm:text-sm text-charcoal/70">
+                WhatsApp Booking:{" "}
+                <a
+                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                  className="font-bold text-festival hover:underline"
+                >
+                  {WHATSAPP_DISPLAY}
+                </a>
+              </p>
 
-            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              <a
-                href={GOOGLE_MAPS_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-block w-full sm:w-auto text-center justify-center bg-festival px-6 sm:px-7 py-3.5 sm:py-4 text-xs font-bold tracking-[0.2em] sm:tracking-[0.3em] text-cream transition hover:bg-crimson shadow"
-              >
-                OPEN IN GOOGLE MAPS 📍
-              </a>
-              <a
-                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi, please send location directions for Maa Ni Mandvi venue in Khedbrahma.")}`}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-block w-full sm:w-auto text-center justify-center border border-festival px-6 sm:px-7 py-3.5 sm:py-4 text-xs font-bold tracking-[0.2em] sm:tracking-[0.3em] text-festival transition hover:bg-festival hover:text-cream"
-              >
-                ASK ON WHATSAPP
-              </a>
-            </div>
-          </Reveal>
+              <div className="mt-8 flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                <a
+                  href={GOOGLE_MAPS_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-block w-full sm:w-auto text-center justify-center bg-crimson px-7 py-4 text-xs font-bold tracking-[0.3em] text-cream transition hover:bg-festival shadow"
+                >
+                  GET DIRECTIONS →
+                </a>
+                <a
+                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi, please send location directions for Maa Ni Mandvi venue in Khedbrahma.")}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-block w-full sm:w-auto text-center justify-center border border-festival px-7 py-4 text-xs font-bold tracking-[0.3em] text-festival transition hover:bg-festival hover:text-cream"
+                >
+                  ASK ON WHATSAPP
+                </a>
+              </div>
+            </Reveal>
 
-          <Reveal className="relative">
-            <div className="gold-frame overflow-hidden rounded-xl shadow-2xl">
-              <img
-                src={venueGateImg}
-                alt="Grand entrance gate of Maa Ni Mandvi Khedbrahma"
-                className="w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-          </Reveal>
+            {/* Hand-Drawn Parchment Map Illustration (Exact Match to Design) */}
+            <Reveal className="relative">
+              <svg
+                viewBox="0 0 500 420"
+                className="w-full drop-shadow-2xl"
+                role="img"
+                aria-label={`Map route to ${VENUE_NAME}`}
+              >
+                <rect
+                  x="10"
+                  y="30"
+                  width="480"
+                  height="360"
+                  fill="var(--cream)"
+                  stroke="var(--gold-burnished)"
+                  strokeWidth="2"
+                  transform="skewX(-4)"
+                />
+                {[80, 160, 240, 320].map((y) => (
+                  <path
+                    key={y}
+                    d={`M20 ${y} L480 ${y + 20}`}
+                    stroke="var(--gold)"
+                    strokeOpacity=".35"
+                  />
+                ))}
+                {[100, 200, 300, 400].map((x) => (
+                  <path
+                    key={x}
+                    d={`M${x} 40 L${x - 30} 380`}
+                    stroke="var(--gold)"
+                    strokeOpacity=".35"
+                  />
+                ))}
+                <path
+                  className="route-line"
+                  d="M40 360 C140 320 120 240 220 230 S330 160 300 120"
+                  fill="none"
+                  stroke="var(--festival)"
+                  strokeWidth="5"
+                  strokeLinecap="round"
+                />
+                <g className="pin" transform="translate(300 120)">
+                  <circle
+                    r="14"
+                    fill="var(--festival)"
+                    opacity=".5"
+                    className="animate-pulse-ring"
+                    style={{ transformOrigin: "center", transformBox: "fill-box" }}
+                  />
+                  <path
+                    d="M0 0 C-22 -30 -22 -60 0 -62 C22 -60 22 -30 0 0Z"
+                    fill="var(--crimson)"
+                  />
+                  <circle
+                    cy="-40"
+                    r="9"
+                    fill="none"
+                    stroke="var(--gold-bright)"
+                    strokeWidth="4"
+                  />
+                </g>
+              </svg>
+            </Reveal>
+          </div>
+
+          {/* Venue Entrance Landmark Photo */}
+          <div className="mt-12 sm:mt-16">
+            <Reveal>
+              <div className="rounded-2xl border-2 border-gold/40 overflow-hidden shadow-2xl relative group">
+                <img
+                  src={venueGateImg}
+                  alt="Venue Grand Entrance - Near Khedbrahma Court"
+                  className="w-full h-56 sm:h-72 md:h-80 object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/95 via-ink/70 to-transparent p-4 sm:p-6 text-cream">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-gold-bright block">
+                    VENUE ENTRANCE GATE LANDMARK
+                  </span>
+                  <p className="font-serif text-lg sm:text-xl font-bold mt-0.5">
+                    Grand Welcome Gate · Near Khedbrahma Court
+                  </p>
+                  <p className="text-xs text-cream/70 mt-0.5">
+                    Situated directly on the Ambaji - Ahmedabad State Highway for smooth traffic and parking.
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 

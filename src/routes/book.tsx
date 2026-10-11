@@ -361,7 +361,7 @@ Maa Ni Mandvi | Khedbrahma`;
                         <img
                           src={d.image}
                           alt={d.artist}
-                          className="h-full w-full object-cover"
+                          className="h-full w-full object-cover object-top"
                         />
                         <div className="absolute top-0 left-0 bg-ink/80 text-[9px] font-bold text-gold px-1.5 py-0.5 rounded-br">
                           DAY {d.dayNum}
