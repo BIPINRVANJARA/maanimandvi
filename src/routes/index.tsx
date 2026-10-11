@@ -1070,7 +1070,7 @@ function Index() {
             <div className="gold-frame overflow-hidden rounded-xl shadow-2xl">
               <img
                 src={garbaArenaImg}
-                alt="Illuminated Grand Garba Mandvo Arena in Gujarat at Night"
+                alt="Illuminated Grand Garba Mandvi Arena in Gujarat at Night"
                 className="w-full object-cover"
                 loading="lazy"
               />
@@ -1204,7 +1204,7 @@ function Index() {
                 ગરબાની રાત, હવે નવા સરનામે...!
               </p>
               <h2 className="mt-3 font-serif text-4xl sm:text-5xl md:text-6xl font-semibold leading-tight text-charcoal">
-                Find Your Way to the Mandvo
+                Find Your Way to the Mandvi
               </h2>
               <div className="my-6 sm:my-8 h-px w-24 bg-gold-burnished" />
               <p className="text-xs sm:text-sm font-bold tracking-[0.3em] text-charcoal uppercase">
